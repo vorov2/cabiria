@@ -1,45 +1,41 @@
 local std = stead
-std:reset("game/02.lua")
-std 'game':ini()
+std("select_chapter#0").__nr_act = 1
 std("@instead").__sound = nil
-std("@instead").__music_loop = 1
+std("@instead").__music_loop = 1024
 std("@instead").__music_fadeout = -1
 std("@instead").__need_fading = false
 std("@instead").__restart = nil
 std("@instead").__music_fadein = -1
-std("@instead").__music = "sfx/fatigue2.ogg"
+std("@instead").__music = "sfx/spring.ogg"
 std("@instead").__autosave_slot = nil
 std("@instead").__autosave = nil
 std("@instead").__menu = nil
-std("@instead").__sound_channel = -1
 std("@instead").__sound_loop = 1
-std("next#0").__nr_act = 1
+std("@instead").__sound_channel = -1
+std("@iface").__raw = nil
+std("credits").__from = std "menu"
+std("credits").__visits = 2
 std("game").player = pl
 std("game").__started = true
 std("game").__pevents = nil
-std("game").__reaction = "{# 1|В коридор}|{# 2|В душевую}"
+std("game").__reaction = nil
 std("game").__aevents = nil
-std("game").__lastdisp = "Я какое-то время вишу под потолком в своей каюте, собираясь с мыслями. Кровь пульсирует в висках. Всё вокруг застилает муть, словно глаза мои смертельно устали от искусственного света.^^Надо прийти в себя, начинается моя последняя {vigilate|вахта} перед выходом из червоточины. Сложно поверить, что скоро мы наконец куда-то прилетим. Кажется, я перестал верить в это уже {arrival|целую вечность} назад. {order|Помню}, как я радовался назначению. Теперь я, наверное, всё бы отдал, чтобы просто вернуться домой. ^^Я невольно упираюсь взглядом в заламинированный {memo|лист} с {watch|распорядком} вахты. Справа от меня -- {hatch|люк} с отсеком для хранения, в который я спрятал форму, прежде чем залезть в {amnion|спальник}, который теперь плавает под потолком, точно сброшенная кожа. Рядом с ним -- ещё одна {drobe|заслонка}, отмеченная по периметру броским красным пунктиром. У выхода из каюты -- сдвигающая гармошкой {showerdoor|дверца} в душевую с сухой чисткой."
+std("game").__lastdisp = "^^^^^<x:44%,center>{#new_game|<b>Новая игра</b>} • {#select_chapter|<b>Главы</b>} • {#tutorial|<b>Обучение</b>} • {#credits|<b>Создатели</b>}^^^^^^^^^^^^^^^^^^^^^^^{#version|<b>Версия:  0.3</b>}"
 std("game").__lreaction = nil
-std("game").__time = 8
-std("@theme").vars = { ["win.col.alink"] = "#0094FF", ["win.col.fg"] = "lightgray", ["scr.gfx.bg"] = "theme/bg.jpg", ["win.fnt.size"] = "18", ["win.col.link"] = "#649BC1" }
-std("@theme").reset_vars = { ["win.col.alink"] = "#0094ff", ["win.col.fg"] = "#d3d3d3", ["scr.gfx.bg"] = "theme/bg.jpg", ["win.fnt.size"] = "18", ["win.col.link"] = "#649bc1" }
-std("intro1").__from = std "main"
-std("intro1").__visits = 1
-std("@iface").__raw = nil
-std("intro2").__from = std "intro1"
-std("intro2").__visits = 1
-std("clock").times = { "{7 часов 59 минут}", "{7 часов 58 минут}", "{7 часов 57 минут}", "{7 часов 56 минут}", "{7 часов 55 минут}" }
-std("clock").tick = 5
-std("clock").__nr_act = 5
+std("game").__time = 9
+std("@theme").vars = { ["scr.gfx.bg"] = "theme/menu.jpg", ["win.col.fg"] = "gray", ["win.fnt.size"] = "20", ["win.col.link"] = "gray", ["win.col.alink"] = "white" }
+std("@theme").reset_vars = { ["scr.gfx.bg"] = "theme/bg.jpg", ["win.col.fg"] = "#d3d3d3", ["win.fnt.size"] = "18", ["win.col.link"] = "#649bc1", ["win.col.alink"] = "#0094ff" }
 std("player").__moved = nil
-std("player").room = std "cabin"
+std("player").room = std "menu"
 std("player").__need_scene = nil
 std("player").__in_afterwalk = false
-std("intro3").__from = std "intro2"
-std("intro3").__visits = 1
-std("cabin").__visits = 1
-std("cabin").__from = std "intro3"
-std("cabin").done = true
-std("@timer").__timer = 0
-std("next#1").__nr_act = 1
+std("back").__nr_act = 4
+std("version").__from = std "menu"
+std("version").__visits = 1
+std("main").__from = std "main"
+std("chapters").__from = std "menu"
+std("chapters").__visits = 1
+std("menu").__from = std "credits"
+std("menu").__visits = 5
+std("version#0").__nr_act = 1
+std("credits#0").__nr_act = 2
