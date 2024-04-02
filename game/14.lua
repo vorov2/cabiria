@@ -2044,7 +2044,7 @@ es.room {
     ^Люк открывается.
     ^Мы с Верой залазим в шлюз.]],
     enter = function(s)
-        es.music("anticipation", 2)
+        es.music("soundinspace", 2)
     end,
     next = "ship"
 }
