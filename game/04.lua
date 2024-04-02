@@ -15,7 +15,7 @@ es.room {
     noinv = true,
     disp = "Судовой отчёт",
     enter = function(s)
-        es.loopMusic("meeting", 6000)
+        es.loopMusic("doom", 6000)
     end,
     dsc = [[<b>Корабль:</b> ГКМ "Грозный"^
     <b>Местоположение:</b> Сантори-5^
