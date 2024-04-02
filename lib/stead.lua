@@ -74,6 +74,8 @@ function es.room(tab)
             next_disp = "{• • •}"
         elseif next_disp and next_disp:startsWith("--") then
             next_disp = fmt.img("theme/bluedot.png").."{"..next_disp.."}"
+        elseif next_disp == "RELOAD" then
+            next_disp = "{• Последняя точка сохранения}"
         else
             next_disp = "{"..next_disp.."}"
         end
