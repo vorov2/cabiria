@@ -1,0 +1,34 @@
+{
+    "editor.lineNumbers": "on",
+    "editor.wordWrapColumn": 100,
+    "editor.rulers": [100],
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.renderWhitespace": "all",
+    "editor.renderLineHighlight": "line",
+    "editor.autoClosingBrackets": "never",
+    "editor.quickSuggestions": {
+        "other": true,
+        "comments": false,
+        "strings": false
+    },
+    "editor.selectionHighlight": true,
+    "editor.minimap.enabled": false,
+    "editor.autoIndent": "keep",
+    "workbench.editor.showIcons": false,
+    "workbench.iconTheme": "vs-minimal",
+    "maptz.regionfolder": {
+        "[lua]": { 
+            "foldEnd": "-- endregion",
+            "foldEndRegex": "--[\\s]*endregion",
+            "foldStart": "-- region [NAME]",
+            "foldStartRegex": "--[\\s]*region[\\s]*(.*)",
+            "disableFolding": false,
+            "isFoldedByDefault": true
+        }
+    },
+    "[plaintext]": {
+        "editor.rulers": [120],
+        "editor.wordWrapColumn": 120,
+        "editor.wordWrap": "wordWrapColumn",
+    }
+}

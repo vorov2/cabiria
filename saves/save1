@@ -1,0 +1,96 @@
+local std = stead
+std:reset("game/14.lua")
+std 'game':ini()
+std("nearlab").__from = std "intro1"
+std("nearlab").__visits = 1
+std("vera3").done = true
+std("vera3").__nr_act = 1
+std("nubolids").__nr_used = 1
+std("lab").__visits = 7
+std("lab").visited = true
+std("lab").__from = std "system.dlg"
+std("lab").crisis = true
+std("lab2").__from = std "system.dlg"
+std("lab2").__visits = 1
+std("simonova3").done = true
+std("simonova3").__nr_act = 2
+std("intro1").__visits = 1
+std("intro1").minutes = 31
+std("intro1").__from = std "main"
+std("intro1").seconds = 55
+std("hall2").__from = std "system.dlg"
+std("hall2").__visits = 2
+std("simcomp2").__nr_used = 1
+std("player").__in_onexit = false
+std("player").__inv_disabled = true
+std("player").__in_exit = false
+std("player").__moved = nil
+std("player").room = std "interlude1"
+std("player").__closed = true
+std("player").obj = std.list { "cutter", "keycard" }:__dirty(true)
+std("player").__in_afterwalk = false
+std("player").__need_scene = nil
+std("game").__reaction = nil
+std("game").__lreaction = nil
+std("game").player = pl
+std("game").__pevents = nil
+std("game").__started = true
+std("game").__aevents = nil
+std("game").__lastdisp = "Мы выходим в коридор. Света почти нет. Вера прижимается ко мне, словно боится темноты. Основная лестница у лифтов сломана, и, если спуститься там не получится, придётся преодолеть с десяток пролётов до пожарного спуска.\
+    ^Потом ещё добраться до доков.\
+    ^-- Мы справимся, -- шепчу я Вере.^^{next#2|• • •}"
+std("game").__in_ini = false
+std("game").__time = 232
+std("@iface").__raw = nil
+std("labtech").__from = std "labhall"
+std("labtech").__visits = 1
+std("@theme").vars = { ["win.col.fg"] = "lightgray", ["win.col.link"] = "#649BC1", ["win.fnt.size"] = "18", ["scr.gfx.bg"] = "theme/bg.jpg", ["win.col.alink"] = "#0094FF" }
+std("@theme").reset_vars = { ["win.col.fg"] = "#d3d3d3", ["win.col.link"] = "#649bc1", ["win.fnt.size"] = "18", ["scr.gfx.bg"] = "theme/bg.jpg", ["win.col.alink"] = "#0094ff" }
+std("main").state = { ["lab.terminal"] = { cursor = 0, buffer = {  }, history = { items = { "tenebris 1", "exit", "tenebris 0", "exit" }, pos = 5 }, vars = { fromLocation = "lab", anim = 0, next = false, ten = false, timer = false }, text = "" }, ["deck.terminal"] = { cursor = 0, buffer = {  }, history = { items = {  }, pos = false }, vars = { next = false, timer = false, anim = 1 }, text = "" } }
+std("interlude1").__from = std "system.dlg"
+std("interlude1").__visits = 1
+std("replica_1#0").__nr_act = 33
+std("simonova").talk = true
+std("simonova").done = true
+std("simonova").__nr_act = 3
+std("locker").unbar = true
+std("locker").__nr_used = 1
+std("locker").unlocked = true
+std("locker").__nr_act = 1
+std("@timer").__timer = 100
+std("labcomp").__nr_used = 2
+std("labcomp").unlocked = true
+std("labcomp").tenebris = false
+std("@instead").__sound = nil
+std("@instead").__music_loop = 2
+std("@instead").__music_fadeout = 3000
+std("@instead").__need_fading = false
+std("@instead").__restart = nil
+std("@instead").__music_fadein = -1
+std("@instead").__music = "sfx/bass.ogg"
+std("@instead").__autosave_slot = nil
+std("@instead").__autosave = nil
+std("@instead").__menu = nil
+std("@instead").__sound_loop = 1
+std("@instead").__sound_channel = -1
+std("system.dlg").oldDsc = false
+std("system.dlg").param_disp = false
+std("system.dlg").branch = "todo"
+std("system.dlg").img = false
+std("system.dlg").__from = std "hall2"
+std("system.dlg").param_dlg = "vera"
+std("system.dlg").currentId = "vera.todo46"
+std("system.dlg").owner = "hall2"
+std("system.dlg").param_key = "vera.todo"
+std("system.dlg").__visits = 9
+std("system.dlg").npc = { "vera" }
+std("system.dlg").seen = { ["vera.head6"] = true, ["simonova.nubolids125"] = true, ["simonova.go23"] = true, ["simonova.head13"] = true, ["vera.rescue31"] = true, ["vera.rescue29"] = true, ["vera.todo43"] = true, ["vera.rescue27"] = true, ["simonova.head8"] = true, ["vera.simonova49"] = true, ["simonova.nubolids235"] = true, ["vera.rescue37"] = true, ["simonova.head6"] = true, ["vera.todo41"] = true, ["vera.rescue25"] = true, ["simonova.nubolids229"] = true, ["vera.simonova51"] = true, ["vera.rescue23"] = true, ["vera.head2"] = true, ["simonova.head4"] = true, ["simonova.nogo19"] = true, ["simonova.head17"] = true, ["vera.head8"] = true, ["simonova.nubolids233"] = true, ["vera.rescue35"] = true, ["simonova.nubolids127"] = true, ["simonova.nubolids231"] = true, ["vera.todo45"] = true, ["vera.rescue33"] = true, ["simonova.head2"] = true, ["vera.todo39"] = true, ["simonova.go21"] = true, ["vera.head4"] = true, ["simonova.head15"] = true, ["vera.todo47"] = true }
+std("system.dlg").reaction = false
+std("system.dlg").param_pic = false
+std("keycard").__nr_take = 1
+std("cutter").__nr_take = 1
+std("replica_2#0").__nr_act = 2
+std("cardholder").taken = true
+std("cardholder").__nr_act = 1
+std("labhall").__from = std "labtech"
+std("labhall").__visits = 3
