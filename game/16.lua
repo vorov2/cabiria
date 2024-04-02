@@ -4,8 +4,9 @@ dofile "lib/es.lua"
 es.main {
     chapter = "16",
     onenter = function(s)
+        es.music("soundinspace")
         take("bag")
-        walk("intro1")
+        walkin("intro1")
     end
 }
 
@@ -15,15 +16,22 @@ es.room {
     pic = "common/ship",
     noinv = true,
     disp = "Судовой отчёт",
-    count = 1,
     systems = { "Сантори", "Антелла-12", "Солнечная система" },
+    dsc = [[<b>Корабль:</b> ГКМ "Грозный"^
+    <b>Порт приписки:</b> Байконур^
+    <b>Экипаж:</b> три человека^
+    <b>Местоположение:</b>]],
+    obj = { "location" }
+}
+
+es.obj {
+    nam = "location",
+    count = 1,
     dsc = function(s)
-        return [[^<b>Корабль:</b>^ ГКМ "Грозный"^^
-        <b>Порт приписки:</b>^ Байконур^^
-        <b>Экипаж:</b>^ три человека^^
-        <b>Местоположение:</b>^ ]] .. s.systems[s.count]
+        local nam = all.intro1.systems[s.count]
+        return "{"..nam.."}"
     end,
-    next = function(s)
+    act = function(s)
         s.count = s.count + 1
         if s.count == 4 then
             walkin("intro2")
@@ -42,14 +50,37 @@ es.room {
     pic = "common/earth",
     noinv = true,
     disp = "",
-    dsc = "Земля",
-    next = "beach1"
+    enter = function(s)
+        es.music("note")
+    end,
+    obj = { "earth" }
+}
+
+es.obj {
+    nam = "earth",
+    dsc = "{Земля}",
+    act = function(s)
+        walkin("pause1")
+    end
+}
+-- endregion
+
+-- region pause1
+es.room {
+    nam = "pause1",
+    noinv = true,
+    pause = 80,
+    enter = function(s)
+        es.music("stream", 2, 0, 3000)
+    end,
+    next = "intro3"
 }
 -- endregion
 
 -- region intro3
 es.room {
     nam = "intro3",
+    noinv = true,
     pic = "dream/beach.sky",
     dsc = [[День такой жаркий, что в городе находится просто невозможно. Кажется, что кожа плавится от духоты. Хорошо хоть, что мы с Верой можем выбраться на пляж.
     ^Когда только подходишь к озеру со стороны кричаящей от зноя дороги, шаркая в шлёпках по липкому асфальту, сразу чуствуешь приятную прохладу.]],
@@ -65,14 +96,14 @@ es.room {
     disp = "Пляж",
     dsc = [[Как ни странно, на пляже никого, кроме нас нет, хотя при такой погоде только и искать спасения у воды.]],
     onexit = function(s, t)
-        if t.nam == "shore" then
+        if t.nam == "shore1" then
             p "Надо сначала разложить вещи."
             return false
         end
     end,
     obj = { "vera1", "spot" },
     way = {
-        path { "К берегу", "shore" }
+        path { "К берегу", "shore1" }
     }
 }
 
@@ -138,7 +169,7 @@ es.obj {
             take("bottle")
             take("towel")
             take("umbrella")
-            return "В сумке лежат бутылка минералки, полотенце."
+            return "В сумке лежат бутылка минералки, полотенце и пляжный зонт."
         else
             return "Больше в сумке ничего нет."
         end
@@ -257,6 +288,9 @@ es.room {
     pic = "dream/beach.water",
     disp = "У берега",
     dsc = [[Я стою на берегу. Ветер треплет волосы. Озеро разволновалось, как будто решило превратиться в большое неистовое море.]],
+    enter = function(s)
+        es.stopMusic(5000)
+    end,
     onexit = function(s, t)
         if t.nam == "main" then
             p "Я оборачиваюсь, махаю Вере рукой, но она на меня не смотрит."
@@ -270,20 +304,31 @@ es.room {
 }
 
 es.obj {
-    nam = "wave",
+    nam = "wave1",
     done = 0,
     dsc = "{Волны} накатывают на песок, утаскивая в зеленоватую воды мелкие камешки и битые ракушки.",
     act = function(s)
-        walkin("shore2")
+        walkin("pause2")
         return true
     end
+}
+-- endregion
+
+-- region pause2
+es.room {
+    nam = "pause2",
+    pause = 80,
+    enter = function(s)
+        es.music("santorum", 10, 0, 4000)
+    end,
+    next = "shore2"
 }
 -- endregion
 
 -- region shore2
 es.room {
     nam = "shore2",
-    pic = "dream/beach.sun",
+    pic = "dream/burst1",
     disp = "У берега",
     dsc = [[Я стою на берегу.]],
     onexit = function(s, t)
@@ -304,16 +349,24 @@ es.obj {
     dsc = [[Я смотрю на тающий в седой дымке горизонт. Небо, если долго вглядываться вдаль, почти неотличимо от воды, как будто я внутри картины, которую забыл дописать художник.
     ^{Волны} пенятся, окатывая холодом босые ноги.]],
     act = function(s)
-        walkin("shore3")
+        walkin("pause3")
         return true
     end
+}
+-- endregion
+
+-- region pause3
+es.room {
+    nam = "pause3",
+    pause = 50,
+    next = "shore3"
 }
 -- endregion
 
 -- region shore3
 es.room {
     nam = "shore3",
-    pic = "dream/beach.sun",
+    pic = "dream/burst2",
     disp = "У берега",
     dsc = [[Я стою на берегу.]],
     onexit = function(s, t)
@@ -334,16 +387,24 @@ es.obj {
     dsc = [[{Волны} поднимаются выше, словно озеро и правда превратилось в море.
     ^Небо темнеет, наливается закатным багрянцем, который отражается в воде.]],
     act = function(s)
-        walkin("interlude1")
+        walkin("pause4")
         return true
     end
+}
+-- endregion
+
+-- region pause4
+es.room {
+    nam = "pause4",
+    pause = 50,
+    next = "interlude1"
 }
 -- endregion
 
 -- region interlude1
 es.room {
     nam = "interlude1",
-    pic = "common/nubolids",
+    pic = "common/nubolids1",
     disp = "У берега",
     dsc = [[Хочется уйти подальше от воды, но я не могу пошевелиться.
     Надо мной штормовым валом поднимается огромная волна.
@@ -353,6 +414,17 @@ es.room {
     Она соткана из тонких красных нитей.
     Нуболиды!
     Крик застывает в горле. Волна нуболидов сметает меня. Алые, как боль, черви пронзают меня насквозь.]],
+    next = "pause5"
+}
+-- endregion
+
+-- region pause5
+es.room {
+    nam = "pause5",
+    pause = 20,
+    enter = function(s)
+        es.stopMusic(1000)
+    end,
     next = "cabin"
 }
 -- endregion
@@ -370,10 +442,10 @@ es.room {
         elseif w.nam == "main" then
             p "Мне сейчас не до того."
             return false
-        elseif w.nam == "fin" and not all.amnion.done then
+        elseif w.nam == "pause6" and not all.amnion.done then
             p "Для начала нужно вылезти из этого проклятого спальника."
             return false
-        elseif w.nam == "fin" and not all.thoughts.done then
+        elseif w.nam == "pause6" and not all.thoughts.done then
             p "Надо успокоиться, собраться с мыслями."
             return false
         end
@@ -381,7 +453,7 @@ es.room {
     obj = { "amnion", "thoughts" },
     way = {
         path { "В душевую", "main" },
-        path { "В коридор", "fin" }
+        path { "В коридор", "pause6" }
     }
 }
 
@@ -412,9 +484,109 @@ es.obj {
 }
 -- endregion
 
--- region fin
+-- region pause6
 es.room {
-    nam = "fin",
-    disp = "Конец"
+    nam = "pause6",
+    pause = 100,
+    enter = function(s)
+        es.music("shutdown")
+    end,
+    next = "credits_roll"
+}
+-- endregion
+
+-- region credits_roll
+local config = {
+    fps = 20,
+    font = "theme/sans.ttf",
+    size = 19,
+    bg = "#1F1F1F",
+    fg = "lightgray"
+}
+
+es.room {
+    nam = "credits_roll",
+    bg = "clean",
+    enter = function(s)
+        es.music("premonition")
+        timer:set(1000/config.fps)
+    end,
+    offset = 0,
+    {
+        cache = false,
+        height = false
+    },
+    credits = {
+        "",
+        "ПЛАТФОРМА INSTEAD",
+        "Пётр Косых",
+        "",
+        "",
+        "СЦЕНАРИЙ",
+        "Василий Воронков",
+        "",
+        "",
+        "ПРОГРАММИРОВАНИЕ",
+        "Василий Воронков",
+        "",
+        "",
+        "МУЗЫКАЛЬНОЕ ОФОРМЛЕНИЕ",
+        "Василий Воронков",
+        "",
+        "",
+        "ТЕСТИРОВАНИЕ",
+        "Иван Иванов",
+        "",
+        "",
+        "ЗВУКОВЫЕ ЭФФЕКТЫ (freesound.org)",
+        "gabemille74 (BreathOfDeath)",
+        "StephenSaldanha (SRS_Cinematic_Hit)",
+        "GowlerMusic (Computer Sound)",
+        "Breviceps (Error Signal 1)",
+        "facuarmo (286 startup)",
+        "",
+        "",
+        "СИЛУЭТЫ ПЕРСОНАЖЕЙ",
+        "NACreative @ Freepik",
+        "",
+        "",
+        "ГРАФИЧЕСКОЕ ОФОРМЛЕНИЕ",
+        "Garry's Mod",
+        "Шедеврум",
+        "Кандинский",
+        "",
+        "",
+        "",
+        "",
+        "МОСКВА 2024",
+        ""
+    },
+    make = function(s)
+        local len = #s.credits
+        local fnt = sprite.fnt(config.font, config.size)
+        local height = fnt:height() * 1.2
+        local theight = height * len
+        local spr = es.sprite(400, theight, config.bg)
+        local shift = 0
+        for i,v in ipairs(s.credits) do
+            if v ~= "" then
+                fnt:text(v, config.fg):draw(spr, 0, shift)
+            end
+            shift = shift + height
+        end
+        return spr,theight
+    end,
+    timer = function(s)
+        if not snd.music_playing() then
+            timer:stop()
+            instead:restart()
+        end
+        s.offset = s.offset + 1
+        if not s.cache then
+            s.cache,s.height = s:make()
+        end
+        s.cache:copy(0, s.height - s.offset, 400, s.offset, sprite.scr(), 50, 0)
+        return true
+    end
 }
 -- endregion

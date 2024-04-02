@@ -14,7 +14,7 @@ es.room {
     disp = "Судовой отчёт",
     pic = "common/ship",
     onenter = function(s)
-        es.music("onechance", 3)
+        es.music("grosni", 2) 
     end,
     dsc = [[<b>Корабль:</b> ГКМ "Грозный"^
     <b>Порт приписки:</b> Байконур^
@@ -88,7 +88,7 @@ es.room {
     onenter = function(s)
         if not s.done then
             s.done = true
-            es.music("fatigue")
+            es.music("fatigue2")
         end
     end,
     dsc = function(s)
@@ -364,7 +364,7 @@ es.room {
             es.music("hope")
         elseif s.mus == 1 and all.counter.done then
             s.mus = 2
-            es.music("juxtaposition")
+            es.music("anticipation")
         end
     end,
     onexit = function(s, t)

@@ -1,5 +1,5 @@
 -- $Name: Бездна света$
--- $Version: 0.2$
+-- $Version: 0.3$
 -- $Author: Василий Воронков$
 -- $Info: Текстовая игра для платформы INSTEAD (http://instead.hugeping.ru)$
 dofile "lib/es.lua"
@@ -7,8 +7,8 @@ dofile "lib/es.lua"
 room {
     nam = "main",
     enter = function(s)
-        gamefile("game/14.lua", true)
-        --walkin("menu")
+        --gamefile("game/16.lua", true)
+        walkin("menu")
     end
 }
 

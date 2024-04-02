@@ -4,12 +4,9 @@ dofile "lib/es.lua"
 es.main {
     chapter = "14",
     onenter = function(s)
-        --es.music("countdown")
-        --take("cutter")
-        --walkin("intro1")
-        take("servicekey")
+        es.music("countdown")
         take("cutter")
-        walkin("interlude1")
+        walkin("intro1")
     end
 }
 
@@ -771,7 +768,13 @@ es.obj {
     nam = "lever",
     unlocked = false,
     done = false,
-    dsc = "Я замечаю металлическую {коробку}, приделанную к стене рядом с дверью.",
+    dsc = function(s)
+        if not s.unlocked then
+            return "Я замечаю металлическую {коробку}, приделанную к стене рядом с перегородкой."
+        else
+            return "На стене рядом с перегородкой -- массивный стальной {рычаг}."
+        end
+    end,
     act = function(s)
         if not s.unlocked then
             return "Раньше я совсем не обращал на неё внимания. Видимо, это какая-то защитная крышка, но поднять её руками не получится."
@@ -789,7 +792,7 @@ es.obj {
             return "Не все проблемы решаются с помощью плазменного резака, я могу повредить что-нибудь."
         elseif w.nam == "servicekey" then
             s.unlocked = true
-            return "В нижней части короба и правда есть отверстие для сервисного ключа, я поворачиваю ключ с неприятным треском, и металлическое забрало поднимается."
+            return "В нижней части короба и правда есть отверстие для сервисного ключа, я поворачиваю ключ с неприятным треском, и коробка открывается."
         end
     end
 }
@@ -1052,7 +1055,7 @@ es.room {
     obj = { "andreev2", "vera8", "stairs" },
     way = {
         path { "К рубке", "corridor4" },
-        path { "К лифту", "main" }
+        path { "К пожарному спуску", "main" }
     }
 }
 
@@ -1122,10 +1125,17 @@ es.obj {
 -- region corridor5_crisis
 es.room {
     nam = "corridor5_crisis",
+    mus = false,
     run = false,
     pic = "station/corridor_elevator",
     disp = "Пролёт рядом с лифтом",
     dsc = [[Я понимаю, что всё сейчас решится за мгновения. От моих действий зависят наши жизни.]],
+    enter = function(s)
+        if not s.mus then
+            s.mus = true
+            es.loopMusic("rush")
+        end
+    end,
     onexit = function(s, t)
         if t.nam == "corridor4" and not s.run then
             p "Мы не можем бросить здесь Андреева."
@@ -1141,7 +1151,7 @@ es.room {
     obj = { "nubolids3", "andreev3", "vera9" },
     way = {
         path { "К рубке", "corridor4" },
-        path { "К лифту", "main" }
+        path { "К пожарному спуску", "main" }
     }
 }
 
@@ -1173,7 +1183,12 @@ es.obj {
         if w.nam == "cutter" then
             purge("cutter")
             all.corridor5_crisis.run = true
-            es.walkdlg("andreev.fin")
+            es.walkdlg {
+                dlg = "andreev",
+                branch = "fin",
+                pic = "station/torch",
+                disp = "Пролёт рядом с лифтом"
+            }
             return true
         end
     end
@@ -1196,7 +1211,7 @@ es.obj {
 -- region death3
 es.room {
     nam = "death3",
-    pic = "station/corridor_elevator",
+    pic = "common/nubolids3",
     disp = "Пролёт у лифта",
     dsc = [[Я не успеваю ничего сделать, меня словно разбивает паралич от нерешительности. Волна нуболидов сметает Андреева и устремляется к нам.
     ^Сначала она обрушивается на Веру.
@@ -1214,7 +1229,7 @@ es.room {
 -- region death4
 es.room {
     nam = "death4",
-    pic = "station/corridor_elevator",
+    pic = "common/nubolids3",
     disp = "Пролёт у лифта",
     dsc = [[Нуболиды слишком далеко, а струя раскалённого газа из резака хоть и обжигает глаза невыносимым светом, но быстро сдаётся под натиском темноты.
     ^Нуболиды проносятся сквозь Андреева так, словно он стал бесплотным духом. Я делаю несколько шагов вперёд и -- резак гаснет.
@@ -1232,7 +1247,7 @@ es.room {
 -- region death5
 es.room {
     nam = "death5",
-    pic = "common/nubolids2",
+    pic = "common/nubolids3",
     disp = "Коридор",
     dsc = [[Я не успеваю ничего сделать, меня словно разбивает паралич от нерешительности. Волна нуболидов настигает нас.
     ^Сначала она обрушивается на Веру...]],
@@ -1249,6 +1264,8 @@ es.room {
 -- region deck
 es.room {
     nam = "deck",
+    mus = false,
+    mus2 = false,
     pic = function(s)
         if not all.lamp.done then
             return "station/deck"
@@ -1264,6 +1281,12 @@ es.room {
             return [[Рубку затягивает непроницаемая темнота, лишь поблёскивают тусклые огоньки на терминале да мерцает старый монитор. Здесь в любой момент могут появиться нуболиды.]]
         end
     end,
+    enter = function(s)
+        if not s.mus then
+            s.mus = true
+            es.music("nightmare", 1, 0, 3000)
+        end
+    end,
     onexit = function(s, t)
         if t.nam == "interlude2" and not have("flash") then
             p "Выходить сейчас в коридор -- это самоубийство."
@@ -1276,8 +1299,11 @@ es.room {
     preact = function(s)
         if not all.bodies.done then
             all.bodies.done = true
-            walkin("vera10.dlg")
+            es.walkdlg("vera.bodies")
             return true
+        end
+        if not s.mus2 and not snd.music_playing() then
+            es.music("nightmare")
         end
     end,
     obj = {
@@ -1340,6 +1366,7 @@ es.obj {
     dsc = "На полу валяется {отвёртка}.",
     act = function(s)
         take("skrewdriver")
+        es.music("crush", 1, 0, 3000)
         es.walkdlg("vera.tremor")
         return true
     end
@@ -1348,7 +1375,7 @@ es.obj {
 es.obj {
     nam = "comp",
     locked = false,
-    dsc = "Один из {вычислительных аппаратов} всё ещё работает, хотя экран у неё рябит и потрескивает.",
+    dsc = "Один из {вычислительных аппаратов} всё ещё работает, хотя экран у него рябит и потрескивает.",
     act = function(s)
         s.locked = true
         walkin("deck.terminal")
@@ -1558,12 +1585,16 @@ es.obj {
 -- region interlude2
 es.room {
     nam = "interlude2",
+    pic = "station/dark_corridor1",
     disp = "Коридор",
     noinv = true,
     dsc = [[Мой самодельный фонарь наливается слабым светом. Надеюсь этого хватит.
     ^Мы выходим в коридор.
     ^Я свечу перед собой, но постоянно оборачиваюсь в страхе, что нуболиды тенью следуют за нами попятам.
     ^Внезапно стенах раздаётся треск лопающего металла, пол под ногами трясётся.]],
+    enter = function(s)
+        es.music("nochance", 1, 0, 3000)
+    end,
     next = function(s)
         es.walkdlg("vera.walking")
         return true
@@ -1574,7 +1605,7 @@ es.room {
 -- region corridor6
 es.room {
     nam = "corridor6",
-    pic = "station/dark_corridor",
+    pic = "station/dark_corridor2",
     disp = "Коридор",
     dsc = [[Фонарь, как лезвие, вспарывает собравшуюся впереди темноту.]],
     onexit = function(s, t)
@@ -1661,9 +1692,16 @@ es.obj {
 -- region cage
 es.room {
     nam = "cage",
+    mus = false,
     pic = "station/staircase",
     disp = "Лестничная клетка",
     dsc = [[Я захожу на лестничную клетку один -- здесь так тесно, что вдвоём не развернуться. Мне надо убедиться, что мы сможем здесь спуститься.]],
+    enter = function(s)
+        if not s.mus then
+            s.mus = true
+            es.music("nightmare")
+        end
+    end,
     obj = { "pit" },
     way = {
         path { "В коридор", "corridor7" }
@@ -1689,6 +1727,9 @@ es.room {
     pic = "station/tonnel",
     disp = "Спуск",
     dsc = [[Я вишу на лестнице, обхватив перила одной рукой, а второй -- сжимая фонарь, от которого зависят наши жизни.]],
+    enter = function(s)
+        es.music("descend", 1, 0, 3000)
+    end,
     obj = { "vera13", "downward" }
 }
 
@@ -1728,15 +1769,13 @@ es.room {
     end,
     obj = { "kofman", "vera14" },
     way = {
-        path { "К доку", "neardock2" }
+        path { "К причалу", "neardock2" }
     }
 }
 
 es.obj {
     nam = "kofman",
     done = false,
-    dlg = "13/kofman",
-    branch = "head",
     dsc = "Я ощупываю сумрак лучом фонаря и замечаю {Кофмана}, который лежит на полу у стены.",
     act = function(s)
         if not s.done then
@@ -1786,6 +1825,9 @@ es.room {
     pic = "station/dark_corridor2",
     disp = "Коридор",
     dsc = [[Причал, у которого, как я надеюсь, ещё стоит "Грозный" уже совсем близко. Остался последний пролёт. Жаль, что впереди ничего не видно.]],
+    enter = function(s)
+        es.music("nochance")
+    end,
     onexit = function(s, t)
         if t.nam == "neardock3" then
             es.walkdlg("kofman.tail")
@@ -1805,7 +1847,7 @@ es.obj {
     act = function(s)
         if not s.done then
             s.done = true
-            es.walkdlg("vera.neardock")
+            es.walkdlg("vera.neardock2")
             return true
         else
             return "Мы ещё успеем наговориться."
@@ -1829,6 +1871,9 @@ es.room {
     pic = "station/redtail",
     disp = "Коридор",
     dsc = [[От красных вспышек вытекают глаза.]],
+    preact = function(s)
+        es.music("onechance", 10, 0, 4000)
+    end,
     onenter = function(s)
         snapshots:make()
     end,
@@ -1848,7 +1893,7 @@ es.obj {
     act = function(s)
         if not s.done then
             s.done = true
-            walkin("vera.neardock3")
+            es.walkdlg("vera.neardock3")
             return true
         else
             return "Разговорами тут не поможешь."
@@ -1860,7 +1905,7 @@ es.obj {
     nam = "line",
     dsc = "{леер}.",
     act = function(s)
-        if not all.vera5.done then
+        if not all.vera16.done then
             return "Леер трещит и прогибается. Скоро либо он не выдержит, либо -- я."
         else
             return "Леер сильно провисает, он может оборваться в любую секунду."
@@ -1879,7 +1924,7 @@ es.obj {
         end
     end,
     act = function(s)
-        if not all.vera15.done then
+        if not all.vera16.done then
             return "У меня нет свободных рук."
         elseif not s.unlocked then
             return "Руками его не откроешь."
@@ -1889,13 +1934,17 @@ es.obj {
         end
     end,
     used = function(s, w)
-        if not all.vera15.done then
+        if not all.vera16.done then
             return "У меня нет свободных рук."
         elseif w.nam == "servicekey" and s.unlocked then
             return "Коробка уже открыта."
         elseif w.nam == "servicekey" then
             s.unlocked = true
             return "Я открываю короб сервисным ключом."
+        elseif w.nam == "skrewdriver" and s.unlocked then
+            return "Коробка уже открыта."
+        elseif w.nam == "skrewdriver" then
+            return "Лучше воспользоваться сервисным ключом."
         end
     end
 }
@@ -1906,6 +1955,9 @@ es.room {
     nam = "ascend",
     pic = "station/redtail",
     disp = "Коридор",
+    enter = function(s)
+        es.music("nochance")
+    end,
     dsc = [[Аварийные люминофоры выхватывают из очертания стен и пола -- то, что сейчас стало стенами и полом, -- лишь затем, чтобы через мгновение всё это смела темнота.]],
     obj = { "vera17", "line2" }
 }
@@ -1947,9 +1999,16 @@ es.room {
 -- region dock
 es.room {
     nam = "dock",
+    mus = false,
     pic = "station/dark_corridor1",
     disp = "Пирс",
     dsc = [[Мы поднялись. Я сам не могу в это поверить, но мы -- поднялись. Остался лишь один маленький шаг.]],
+    preact = function(s)
+        if not s.mus and not snd.music_playing() then
+            s.mus = true
+            es.music("roar")
+        end
+    end,
     obj = { "vera18", "hatch" }
 }
 
@@ -1984,6 +2043,9 @@ es.room {
     dsc = [[Я просовываю в вентиль сервисный ключ, наваливаюсь на него всем телом, и вентиль сдвигается.
     ^Люк открывается.
     ^Мы с Верой залазим в шлюз.]],
+    enter = function(s)
+        es.music("anticipation", 2)
+    end,
     next = "ship"
 }
 -- endregion
@@ -2028,6 +2090,9 @@ es.room {
     pic = "ship/corridor",
     disp = "Коридор корабля",
     dsc = [[Глаза всё ещё не привыкли к яркому свету. Кажется, что всё вокруг застилает снежная белизна.]],
+    enter = function(s)
+        es.music("nochance", 2)
+    end,
     obj = { "device", "minaeva2", "vera19" }
 }
 
@@ -2050,7 +2115,12 @@ es.obj {
 -- region outro1
 es.room {
     nam = "outro1",
-    onenter = function(s)
+    noinv = true,
+    pause = 50,
+    enter = function(s)
+        es.stopMusic(4000)
+    end,
+    next = function(s)
         gamefile("game/15.lua", true)
         return true
     end

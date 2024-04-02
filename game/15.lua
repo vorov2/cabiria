@@ -4,6 +4,7 @@ dofile "lib/es.lua"
 es.main {
     chapter = "15",
     onenter = function(s)
+        es.music("signal")
         walk("intro1")
     end
 }
@@ -11,12 +12,13 @@ es.main {
 -- region intro1
 es.room {
     nam = "intro1",
+    pic = "common/ship",
     disp = "Судовой отчёт",
-    dsc = [[^<b>Корабль:</b>^ ГКМ "Грозный"^^
-    <b>Порт приписки:</b>^ Байконур^^
-    <b>Экипаж:</b>^ три человека^^
-    <b>Дееспособный экипаж:</b>^ три человека^^
-    <b>Местоположение:</b>^ Сантори]],
+    dsc = [[<b>Корабль:</b> ГКМ "Грозный"^
+    <b>Порт приписки:</b> Байконур^
+    <b>Экипаж:</b> три человека^
+    <b>Дееспособный экипаж:</b> три человека^
+    <b>Местоположение:</b> Сантори]],
     next = "ship1"
 }
 -- endregion
@@ -24,12 +26,20 @@ es.room {
 -- region ship1
 es.room {
     nam = "ship1",
+    mus = false,
+    pic = "ship/corridor",
     disp = "Коридор корабля",
     dsc = [[Мы долго молчим -- словно соблюдаем траур.]],
     onexit = function(s, t)
         if t.nam == "main" then
             p "Я не могу сейчас просто взять и уйти."
             return false
+        end
+    end,
+    preact = function(s)
+        if not s.mus then
+            s.mus = true
+            es.music("juxtaposition", 2)
         end
     end,
     obj = { "majorov1", "vera1" },
@@ -44,14 +54,12 @@ es.room {
 
 es.obj {
     nam = "majorov1",
-    dlg = "14/majorov",
-    branch = "head",
     dsc = "{Майоров} сидит на полу перед телом Минаевой, обхватив голову.",
     act = function(s)
         if not all.vera1.done then
             return "Я не знаю, что ему сказать."
         else
-            walkin(s.dlg)
+            es.walkdlg("majorov.head")
             return true
         end
     end
@@ -60,13 +68,11 @@ es.obj {
 es.obj {
     nam = "vera1",
     done = false,
-    dlg = "14/vera",
-    branch = "head",
     dsc = "{Вера} смотрит на него пустым отрешённым взглядом.",
     act = function(s)
         if not s.done then
             s.done = true
-            walkin(s.dlg)
+            es.walkdlg("vera.head")
             return true
         else
             return "Надо дать ей время успокоиться."
@@ -78,6 +84,7 @@ es.obj {
 -- region ship2
 es.room {
     nam = "ship2",
+    pic = "ship/corridor",
     disp = "Коридор корабля",
     dsc = [[Я понимаю, о чём она хочет поговорить и отдал бы сейчас всё за то, чтобы этого разговора не состоялось.]],
     onexit = function(s, t)
@@ -98,11 +105,10 @@ es.room {
 
 es.obj {
     nam = "vera2",
-    dlg = "14/vera",
-    branch = "main",
     dsc = "{Вера} стоит напротив и молча смотрит на меня.",
     act = function(s)
-        walkin(s.dlg)
+        es.stopMusic(3000)
+        es.walkdlg("vera.main")
         return true
     end
 }
@@ -117,6 +123,7 @@ es.obj {
 -- region ship3
 es.room {
     nam = "ship3",
+    pic = "ship/corridor",
     disp = "Коридор корабля",
     dsc = [[Коридор белый, как на засвеченной фотографии. Я понимаю, что запомню этот момент на всю жизнь.]],
     onexit = function(s, t)
@@ -137,11 +144,9 @@ es.room {
 
 es.obj {
     nam = "vera3",
-    dlg = "14/vera",
-    branch = "nav",
     dsc = "{Вера} молча смотрит в пол, словно приговорённая к казни.",
     act = function(s)
-        walkin(s.dlg)
+        es.walkdlg("vera.nav")
         return true
     end
 }
@@ -150,6 +155,7 @@ es.obj {
 -- region nav
 es.room {
     nam = "nav",
+    pic = "ship/nav",
     disp = "Навигационный отсек",
     dsc = [[Навигационный отсек кажется мне камерой для чудовищных экспериментов -- особенно сама капсула, стоявая на металлическом пьедестале, из которого выплетаются толстые гофрированные трубы.]],
     onexit = function(s, t)
@@ -166,11 +172,9 @@ es.room {
 
 es.obj {
     nam = "vera4",
-    dlg = "14/vera",
-    branch = "tail",
     dsc = "{Вера} переоделась в лёгкую белую форму. Она сидит на краю открытой",
     act = function(s)
-        walkin(s.dlg)
+        es.walkdlg("vera.tail")
         return true
     end
 }
@@ -188,10 +192,11 @@ es.obj {
 }
 -- endregion
 
--- region cell
+-- region cabin
 es.room {
-    nam = "cell",
+    nam = "cabin",
     done = false,
+    pic = "ship/cabin",
     disp = "Каюта",
     dsc = function(s)
         if not s.done then
@@ -207,12 +212,15 @@ es.room {
         elseif t.nam == "ship4" and not s.done then
             p "Я бы хотел сначала принять душ."
             return false
+        elseif t.nam == "ship4" and s.done and not all.pause1.seen then
+            walkin("pause1")
+            return false
         end
     end,
     obj = { "clothes", "drobe", "showerdoor" },
     way = {
-        path { "В душевую", "shower" },
-        path { "В коридор", "ship4" }
+        path { "В коридор", "ship4" },
+        path { "В душевую", "shower" }
     }
 }
 
@@ -238,24 +246,47 @@ es.obj {
 -- region shower
 es.room {
     nam = "shower",
+    pic = "ship/shower",
     disp = "Душевая",
     dsc = [[Я раздеваюсь и пролезаю в душевую.
     ^Сначала я долго втираю в себя едкий щелочной порошок, отдающий бытовой хлоркой -- так рьяно, словно хочу сжечь кожу, -- а потом долго строю под струёй затхлого воздуха.
     ^Воды в душевой нет, помыться можно только так.]],
     onenter = function(s)
-        all.cell.done = true
+        all.cabin.done = true
     end,
     way = {
-        path { "В каюту", "cell" }
+        path { "В каюту", "cabin" }
     }
+}
+-- endregion
+
+-- region pause1
+es.room {
+    nam = "pause1",
+    seen = false,
+    noinv = true,
+    pause = 100,
+    enter = function(s)
+        s.seen = true
+        es.stopMusic(3000)
+    end,
+    next = "ship4"
 }
 -- endregion
 
 -- region ship4
 es.room {
     nam = "ship4",
+    mus = false,
+    pic = "ship/corridor",
     disp = "Коридор",
     dsc = [[На полу коридора осталось несколько красных пятен. Я стараюсь на них не смотреть.]],
+    enter = function(s)
+        if not s.mus then
+            s.mus = true
+            es.music("anticipation", 1, 5000)
+        end
+    end,
     onexit = function(s, t)
         if t.nam == "main" then
             p "Мне надо помочь Майорову."
@@ -266,7 +297,7 @@ es.room {
         end
     end,
     way = {
-        path { "В каюту", "cell" },
+        path { "В каюту", "cabin" },
         path { "В техотсек", "main" },
         path { "В медотсек", "main" },
         path { "В навигационный отсек", "nav" },
@@ -278,6 +309,7 @@ es.room {
 -- region deck
 es.room {
     nam = "deck",
+    pic = "ship/deck",
     disp = "Рубка",
     dsc = [[Свет в рубке такой же яркий, как и в навигационном отсеке. Кажется, корабль хочет выжечь мне глаза. Я прикрываюсь от света ладонью.]],
     obj = { "majorov3" },
@@ -289,22 +321,24 @@ es.room {
 es.obj {
     nam = "majorov3",
     done = false,
-    dlg = "14/majorov",
-    branch = function(s)
-        if not s.done then
-            return "order"
-        else
-            return "ask"
-        end
-    end,
     dsc = "{Майоров} сидит в ложементе пилота и проверяет что-то в терминале. Рябящий экран отбрасывает на его лицо зелёную тень.",
     act = function(s)
-        walkin(s.dlg)
-        return true
+        if not s.done then
+            s.done = true
+            es.walkdlg("majorov.order")
+            return true
+        else
+            es.walkdlg("majorov.ask")
+            return true
+        end
     end,
     used = function(s, w)
-        if w.nam == "envelope" or w.nam == "order" then
-            walkin(s.dlg)
+        if (w.nam == "envelope" or w.nam == "order") and not s.done then
+            s.done = true
+            es.walkdlg("majorov.order")
+            return true
+        elseif (w.nam == "envelope" or w.nam == "order") and s.done then
+            es.walkdlg("majorov.ask")
             return true
         end
     end
@@ -316,6 +350,7 @@ es.obj {
     inv = function(s)
         take("order")
         purge("envelope")
+        es.music("nochance")
         return "Я открываю край конверта и вытаскиваю из него бланк ядовито-жёлтого цвета."
     end
 }
@@ -333,8 +368,13 @@ es.obj {
 -- region outro1
 es.room {
     nam = "outro1",
-    onenter = function(s)
-        gamefile("game/15.lua", true)
+    noinv = true,
+    pause = 50,
+    enter = function(s)
+        es.stopMusic(3000)
+    end,
+    next = function(s)
+        gamefile("game/16.lua", true)
         return true
     end
 }
