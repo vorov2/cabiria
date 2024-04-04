@@ -1,1 +1,1 @@
-std "@prefs".chapters = { ["4"] = true, ["1"] = true, ["2"] = true, ["16"] = true, ["3"] = true }
+std "@prefs".chapters = { ["4"] = true, ["1"] = true, ["5"] = true, ["2"] = true, ["16"] = true, ["3"] = true }

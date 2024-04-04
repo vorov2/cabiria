@@ -140,7 +140,7 @@ es.obj {
     end
 }
 
-local function outOfOrder(s)
+local function outOfOrder(s, args, load)
     local function formatLine()
         local arr = es.rndArray(rnd(1, 1024), 5, 2048)
         local res = {}
@@ -149,6 +149,10 @@ local function outOfOrder(s)
         end
         return table.concat(res, " ")
     end
+    if not load then
+        return "$load"
+    end
+    es.sound("error")
     return {
         "Нарушено соединение с контуром! Невозможно получить данные!",
         "Код ошибки: <ошибка при получении кода ошибки>",
@@ -467,9 +471,12 @@ es.room {
     nam = "spacesuit",
     pic = "ship/spacesuit",
     disp = "Каюта",
-    dsc = [[Набрав побольше воздуха в грудь -- так, словно собираюсь нырять на глубину, -- я втискиваюсь в громоздский скафандр. Он тут же обхватывает меня, стискивает грудную клетку, не давая вздохнуть.
+    dsc = [[Набрав побольше воздуха в грудь, словно собираюсь нырять на глубину, я влезаю в громоздский скафандр. Он тут же обхватывает меня, стискивает грудную клетку, не давая вздохнуть.
     ^Перед глазами плывут красные круги.
     ^Дело здесь явно не в скафандре. Мне просто надо успокоиться.]],
+    enter = function(s)
+        es.music("tragedy", 3, 0, 3000)
+    end,
     obj = { "weight", "helmet" }
 }
 
@@ -559,8 +566,8 @@ es.obj {
 
 es.obj {
     nam = "modules",
-    dsc = "{БВА} мерно гудит, точно живое существо.",
-    act = "Всё штатно, ни одного красного огонька.",
+    dsc = "{БВА} отключена, как и полагается при активации электроники.",
+    act = "С БВА всё в порядке, не нужно её трогать.",
     used = function(s, w)
         if w.nam == "key" then
             return "С БВА всё в порядке, не нужно её трогать."
@@ -638,27 +645,33 @@ es.terminal {
                 "Версия ядра 7.0.12"
             }
         end,
-        logs = function(s)
+        logs = function(s, args, load)
             if not s.vars.logs then
                 return "Ошибка! Сервис операционного логирования недоступен!"
+            end
+            if not load then
+                return "$load"
             end
             if s.vars.seed == 0 then
                 s.vars.seed = rnd(1024)
             end
             return es.generateLog(s.vars.seed, 26)
         end,
-        monitor = function(s, args)
+        monitor = function(s, args, load)
             if not s.vars.monitor then
                 return "Ошибка! Сервис мониторинга недоступен!"
             end
             local arg = s:arg(args)
             if not arg then
+                if not load then
+                    return "$load"
+                end
                 return {
-                    string.format("Потребление памяти: %s%", rnd(55, 63)),
-                    string.format("Общая загрузка вычислительных блоков: %s%", rnd(9,12)),
-                    string.format("Загрузка нейронного блока: %s%", rnd(81,99)),
+                    string.format("Потребление памяти: %s%s", rnd(55, 63), "%"),
+                    string.format("Общая загрузка вычислительных блоков: %s%s", rnd(9,12), "%"),
+                    string.format("Загрузка нейронного блока: %s%s", rnd(81,99), "%"),
                     "Загрузка навигационного блока: 0%",
-                    string.format("Загрузка дисковой подсистемы: %s%", rnd(1,5))
+                    string.format("Загрузка дисковой подсистемы: %s%s", rnd(1,5), "%"),
                     "",
                     "Синтакис:",
                     "Общие данные: monitor",
@@ -666,19 +679,27 @@ es.terminal {
                 }
             elseif not s.allServices[arg] then
                 return string.format("Неизвестный сервис: %s.", arg)
+            elseif not s.vars[arg] then
+                return string.format("Сервис %s не запущен.", arg)
             else
+                if not load then
+                    return "$load"
+                end
                 return {
-                    string.format("%s (%s):", s.allServices[arg]),
+                    string.format("%s (%s):", arg, s.allServices[arg]),
                     string.format("Потребление памяти: %sKB", rnd(12,16)),
-                    string.format("Загрузка вычислительных блоков: %s%", rnd(1, 3)),
+                    string.format("Загрузка вычислительных блоков: %s%s", rnd(1, 3), "%"),
                     "Загрузка нейронного блока: 0%",
                     "Загрузка навигационного блока: 0%",
-                    string.format("Загрузка дисковой подсистемы: %s%", rnd(1,2))
+                    string.format("Загрузка дисковой подсистемы: %s%s", rnd(1,2), "%")
                 }
             end
         end,
         services = function(s, args, load)
             if not args or #args == 0 then
+                if not load then
+                    return "$load"
+                end
                 local retval = {}
                 for k,v in pairs(s.allServices) do
                     table.insert(retval, s:serviceLine(k))
@@ -814,6 +835,15 @@ es.room {
         elseif t.nam == "corridor" and all.helmet.done then
             p "Я бы предпочёл сначала снять шлем."
             return false
+        elseif t.nam == "blockpane" then
+            local ret = testPane()
+            if ret == true then
+                p "Я включаю фонарик и поднимаюсь чуть выше по лестнице. Света совсем мало, таким фонарём только радужку глаза просвечивать, но это лучше, чем ничего."
+                return true
+            else
+                p(ret)
+                return false
+            end
         end
     end,
     enter = function(s)
@@ -828,7 +858,8 @@ es.room {
         "key_finder"
     },
     way = {
-        path { "В коридор", "corridor" }
+        path { "В коридор", "corridor" },
+        path { "Подняться выше", "blockpane" }
     }
 }
 
@@ -852,21 +883,14 @@ es.obj {
             return "Над головой у меня смутно чернеет прямоугольная {ниша}, в которой прячутся блокираторы."
         end
     end,
-    act = "Я не собираюсь блокираторы плазмой при таком освещении.",
+    act = "Отсюда я почти ничего не вижу.",
     used = function(s, w)
         if w.nam == "cutter" then
-            return "Использовать плазменный резак вместо фонаря -- это не лучшая идея. К тожу резак не освещает, а слепит -- смотреть на его струю невозможно, глаза начинают вытекать."
+            return "Использовать плазменный резак вместо фонаря -- это не лучшая идея. К тожу резак не освещает, а слепит -- смотреть на его струю невозможно, глаза вытекают."
         elseif w.nam == "key" then
             return "Мне не хватает света, я должен хорошо видеть, какие блокираторы режу."
         elseif w.nam == "flash" then
-            local ret = testPane()
-            if ret == true then
-                p "Я включаю фонарик и поднимаюсь чуть выше по лестнице. Света совсем мало, таким фонарём только радужку глаза просвечивать, но это лучше, чем ничего."
-                walkin("blockpane")
-                return true
-            else
-                return ret
-            end
+            return "Надо подняться повыше."
         end
     end
 }
@@ -938,9 +962,9 @@ es.obj {
 -- region blockpane
 es.room {
     nam = "blockpane",
-    pic = "ship/gate",
+    pic = "ship/blockpane",
     disp = "Шлюз",
-    dsc = [[Главное -- не сорваться с этой чёртовой лестницы.]],
+    dsc = [[Главное -- не сорваться с хлипкой лестницы.]],
     obj = {
         "blocker_holder",
         "instruction",
@@ -976,13 +1000,16 @@ es.obj {
         if w.nam == "key" and not s.unbar and not s.lost then
             s.lost = true
             purge("key")
-            return "Делать что-нибудь в скафандре до одуре неудобно! Пальцы словно одеревенели. Сервисный ключ выскальзывает у меня из руки, когда я пытаюсь открыть заслонку, и со звоном падает куда-то вниз."
+            es.music("dali", 2)
+            return "Делать что-нибудь в скафандре до одури неудобно! Пальцы одеревенели, как при обморожении. Сервисный ключ выскальзывает из рук, когда я пытаюсь открыть заслонку, и со звоном проваливается в гулкую кишку шлюза."
         elseif w.nam == "key" and not s.unbar then
             s.unbar = true
             return "Я открываю заслонку."
         elseif w.nam == "key" and s.unbar then
             s.unbar = false
             return "Я закрываю заслонку."
+        elseif w.nam == "flash" then
+            return "Света от фонарика совсем мало, надо направить его на ту поверхность, которую я хочу получше разглядеть."
         end
     end
 }
@@ -1039,12 +1066,17 @@ local block_base = {
             return false
         end
     end,
-    act = "На них должны быть какие-то пометки, но я ничего не вижу.",
+    act = function(s)
+        if not s.done then
+            return "На блокираторе должны быть какие-то пометки, но я ничего не вижу."
+        else
+            return "С этим блокироватором я уже разобрался."
+        end
+    end,
     used = function(s, w)
         if w.nam == "flash" then
             return string.format("Я свечу фонариком на блокиратор, на нём есть наклейка с %s квадратом.", s.squares[s.num])
-        elseif w.nam == "cutter" then
-            print("check", s.num)
+        elseif w.nam == "cutter" and not s.done then
             local res = s:check()
             if res == true then
                 local snd = s:anyDone()
@@ -1062,8 +1094,12 @@ local block_base = {
             else
                 return res
             end
-        elseif w.nam == "key" then
+        elseif w.nam == "cutter" then
+            return "Всё уже сделано."
+        elseif w.nam == "key" and not s.done then
             return "Сервисный ключ тут не поможет."
+        elseif w.nam == "key" then
+            return "Я думаю, стоит оставить блокироватор в покое."
         end
     end
 }
@@ -1127,7 +1163,7 @@ es.room {
     noinv = true,
     pic = "ship/gate",
     enter = function(s)
-        es.stopMusic()
+        es.music("roar", 1, 0, 5000)
     end,
     dsc = [[Последний блокиратор!
     ^Я постарался унять дрожь в руках, навёл дуло резака на блокиратор и дёрнул за спусковой крючок. Несколько секунд ничего не происходило. Струя плазмы била в стальную жилу без видимого эффекта. Спустя несколько секунд блокиратор начал раскаляться, стал пунцовым от жара и треснул, как сухожилие.
