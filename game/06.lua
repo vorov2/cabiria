@@ -83,17 +83,12 @@ es.room {
     problem = false,
     pic = "ship/tech",
     disp = "Технический отсек",
-    dsc = [[Все машины работают, и в отсеке стоит низкочастотный гул, от которого раскалывается голова, а воздух тёплый, как в парной, из-за охлаждения вычислительных аппаратов.]],
+    dsc = [[Аппараты работают, и в отсеке стоит низкочастотный гул, от которого закладывает уши и становится тяжело дышать, словно тебе невидимой удавкой сжимают горло. Впрочем, из-за трудолюбиво пыхтящих систем охлаждения воздух стал тёплым, как в парной, и мне не терпится поскорее отсюда выйти.]],
     onexit = function(s, t)
         if t.nam == "corridor" and s.done then
             es.stopMusic(3000)
             purge("key")
-            es.walkdlg {
-                dlg = "majorov",
-                branch = "head",
-                pic = "ship/corridor",
-                disp = "Коридор"
-            }
+            walkin("pause1")
             return false
         end
     end,
@@ -140,13 +135,25 @@ es.obj {
 es.obj {
     nam = "modules",
     done = false,
-    dsc = "{БВА} работает, несмотря на то, что мы должны были переключиться на фотонную ВА.",
-    act = "Возможно, его забыли отключить?",
+    dsc = function(s)
+        if not s.done then
+            return "{БВА} работает, несмотря на то, что мы должны были переключиться на фотонный аппарат."
+        else
+            return "{БВА} застыл, как величественное надгорбие аналоговым машинам, отключённый от сети."
+        end
+    end,
+    act = function(s)
+        if not s.done then
+            return "Возможно, его забыли отключить?"
+        else
+            return "Лучше его не трогать."
+        end
+    end,
     used = function(s, w)
         if w.nam == "key" and not s.done then
             s.done = true
-            return [[И правильно! Лучше на всякий случай отключить БВА!
-            ^Я вставляю в сервисный разъём ключ и несколько раз поворачиваю его против часовой стрелки. БВА дрожит, как старый дизель, обиженно вспыхивает индикаторами и затихает.]]
+            return [[И правильно! Лучше на всякий случай отключить БВА.
+            ^Я вставляю в сервисный разъём ключ и несколько раз поворачиваю его, преоделевая тугое скрипящее сопротивление не желающей отрубаться машины. БВА дрожит, как старый дизель, обиженно вспыхивает индикаторами и затихает.]]
         elseif w.nam == "key" and s.done then
             return "Опять включать БВА? Но зачем? Мне кажется, я могу найти занятие получше."
         end
@@ -230,6 +237,9 @@ es.terminal {
             if not s.vars.logs then
                 return s:error("Сервис операционного логирования недоступен!")
             end
+            if not load then
+                return "$load"
+            end
             if s.vars.seed == 0 then
                 s.vars.seed = rnd(1024)
             end
@@ -241,6 +251,9 @@ es.terminal {
             end
             local arg = s:arg(args)
             if not arg then
+                if not load then
+                    return "$load"
+                end
                 local cpu,mem = rnd(4,9),rnd(42, 49)
                 if s.vars.backup then
                     cpu = cpu + 80
@@ -258,7 +271,7 @@ es.terminal {
                     "Данные по сервису: monitor [название сервиса]"
                 }
             elseif not s.allServices[arg] then
-                return string.format("Неизвестный сервис: %s.", arg)
+                return string.format("Сервис не найден: %s.", arg)
             elseif s.vars[arg] == -1 then
                 return string.format("Сервис %s заблокирован.", arg)
             elseif s.vars[arg] == false then
@@ -266,6 +279,9 @@ es.terminal {
             elseif not load then
                 return "$load"
             elseif arg == "backup" then
+                if not load then
+                    return "$load"
+                end
                 return {
                     string.format("Статистика по %s (%s):", s.allServices2[arg], arg),
                     "Потребление памяти: 8093KB",
@@ -287,6 +303,9 @@ es.terminal {
         end,
         services = function(s, args, load)
             if not args or #args == 0 then
+                if not load then
+                    return "$load"
+                end
                 local retval = {}
                 for k,v in pairs(s.allServices) do
                     table.insert(retval, s:serviceLine(k))
@@ -304,15 +323,15 @@ es.terminal {
                 if cmd == "start" or cmd == "stop" then
                     local srv = args[2]
                     if not srv or srv == "" then
-                        return "Не задано кодовое имя сервиса."
+                        return s:error("Не задано кодовое имя сервиса.")
                     elseif not srv:any(allServ) then
                         return string.format("Сервис не найден: %s.", srv)
                     elseif cmd == "start" then
                         if s.vars[srv] == -1 then
-                            return "Невозможно запустить заблокированный сервис."
+                            return s:error("Невозможно запустить заблокированный сервис.")
                         end
                         if s.vars[srv] == nil then
-                            return "Недостаточно прав для совершения операции."
+                            return s:error("Недостаточно прав для совершения операции.")
                         end
                         if s.vars[srv] then
                             return string.format("Сервис %s (%s) уже запущен.", srv,
@@ -331,10 +350,10 @@ es.terminal {
                         end
                     elseif cmd == "stop" then
                         if s.vars[srv] == -1 then
-                            return "Невозможно запустить заблокированный сервис."
+                            return s:error("Невозможно запустить заблокированный сервис.")
                         end
                         if s.vars[srv] == nil then
-                            return "Недостаточно прав для совершения операции."
+                            return s:error("Недостаточно прав для совершения операции.")
                         end
                         if s.vars[srv] == false then
                             return string.format("Сервис [%s] уже остановлен.", srv)
@@ -347,7 +366,7 @@ es.terminal {
                         end
                     end
                 else
-                    return string.format("Неизвестная сервисная команда: %s.", cmd)
+                    return s:error(string.format("Неизвестная сервисная команда: %s.", cmd))
                 end
             end
         end,
@@ -390,7 +409,7 @@ es.terminal {
                     "Система стыковки работает в штатном режиме."
                 }
             else
-                return string.format("Неизвестный отчёт: %s.", arg)
+                return s:error(string.format("Неизвестный отчёт: %s.", arg))
             end
         end
     },
@@ -402,12 +421,29 @@ es.terminal {
 }
 -- endregion
 
+-- region pause1
+es.room {
+    nam = "pause1",
+    noinv = true,
+    pause = 50,
+    next = function(s)
+        es.music("hope", 2)
+        es.walkdlg {
+            dlg = "majorov",
+            branch = "head",
+            pic = "ship/corridor",
+            disp = "Коридор"
+        }
+    end
+}
+-- endregion
+
 -- region cabin
 es.room {
     nam = "cabin",
     pic = "ship/cabin",
     disp = "Каюта",
-    dsc = [[Я зачем-то залезаю в свою каюту, словно желаю убедиться, что всё осталось на своих местах.]],
+    dsc = [[Я зачем-то залезаю в каюту, словно желаю убедиться, что всё осталось на своих местах.]],
     onexit = function(s, t)
         if t.nam == "main" then
             p "Душ сейчас я принимать не буду."
@@ -476,6 +512,18 @@ es.room {
 }
 -- endregion
 
+-- region pause2
+es.room {
+    nam = "pause2",
+    noinv = true,
+    pause = 50,
+    enter = function(s)
+        es.stopMusic(3000)
+    end,
+    next = "interlude1"
+}
+-- endregion
+
 -- region interlude1
 es.room {
     nam = "interlude1",
@@ -484,7 +532,7 @@ es.room {
     onenter = function(s)
         es.music("fatigue2")
     end,
-    dsc = [[Спал я плохо и, хотя меня всё ещё преследуют кошмары, я всерьёз думаю о том, чтобы вернуться в каюту и свалиться в кровать. Делать мне всё равно больше нечего -- все на станции как будто забыли о моём существовании, и даже Андреев, обещавший устроить какую-то экскурсию, так и не объявился.]],
+    dsc = [[Спал я плохо и, хотя меня всё ещё преследуют кошмары, я всерьёз думаю о том, чтобы вернуться в жилой модуль и свалиться в кровать. Делать мне всё равно больше нечего -- все на станции как будто забыли о моём существовании, и даже Андреев, обещавший устроить какую-то экскурсию, так и не объявился.]],
     obj = { "figure" }
 }
 
@@ -503,19 +551,19 @@ es.room {
     nam = "neardock",
     pic = "station/neardock3",
     disp = "Коридор у пирса",
-    dsc = [[Света здесь так мало, что можно всерьёз решить, что врубать лампы в полную силу запрещается какими-нибудь правилами станции.]],
+    dsc = [[Света здесь так мало, что можно всерьёз решить, что врубать лампы в полную силу запрещается по правилам станции.]],
     obj = { "dreams", "vera" }
 }
 
 es.obj {
     nam = "dreams",
-    dsc = "Наверное, если меня наконец отпустят эти дикие кошмары, в которых меня жрут живьём черви, я начну блуждать во сне по таким вот сумрачным {лабиринтам}.",
+    dsc = "Наверное, когда меня оставят в покое кошмары с мерзкими алыми червями, пожирающими меня живьём, как труп, им на смену придут новые сны -- и я начну блуждать по таким вот сумрачным {лабиринтам} в поисках света в конце тоннеля.",
     act = "И ещё не известно, что лучше."
 }
 
 es.obj {
     nam = "vera",
-    dsc = "Девушка, с которой я познакомился вчера -- кажется, её зовут {Вера} -- расхаживает взад-вперёд по коридору.",
+    dsc = "Девушка, с которой я познакомился вчера -- её зовут {Вера} -- расхаживает взад-вперёд по коридору.",
     act = function(s)
         es.music("faith", 2, 0, 3000)
         es.walkdlg("vera.head")
@@ -524,9 +572,9 @@ es.obj {
 }
 -- endregion
 
--- region pause1
+-- region pause3
 es.room {
-    nam = "pause1",
+    nam = "pause3",
     noinv = true,
     pause = 50,
     enter = function(s)
@@ -542,7 +590,7 @@ es.room {
     mus = false,
     pic = "station/cabin1",
     disp = "Жилой модуль C1",
-    dsc = [[Сутки на "Кабирии" -- механические, а освещение в каютах в течение вычисленного по хронометру дня никогда не приглушают, из-за чего кажется, что время остановилось.]],
+    dsc = [[Сутки на "Кабирии" -- механические, а освещение в каютах в течение вычисленного по хронометру дня не торопятся приглушать. Кажется, время остановилось.]],
     onenter = function(s)
         if not s.mus then
             s.mus = true
@@ -560,7 +608,7 @@ es.obj {
     nam = "porthole",
     dsc = "Единственное, что изменяется по мере того, как станция плывёт по орбите -- это вид в иллюминаторе. Но сейчас {иллюминатор} закрыт.",
     act = function(s)
-        walkin("pause2")
+        walkin("pause4")
         return true
     end
 }
@@ -586,8 +634,7 @@ es.obj {
 es.obj {
     nam = "wallcomp",
     dsc = "На стене висит широкий информационный {экран}. Правда, я до сих пор не понял, как им пользоваться.",
-    act = "Видимо, терминала в каюте нет, а на экран выводится всякая статистика да экстренные сообщения. Сейчас вот, например, там отображается скорость нашего движения по орбите."
-
+    act = "Терминала в каюте нет, а на экран выводится статистика и экстренные сообщения. Сейчас вот, например, там отображается скорость нашего движения по орбите."
 }
 
 es.obj {
@@ -648,9 +695,9 @@ es.room {
 }
 -- endregion
 
--- region pause2
+-- region pause4
 es.room {
-    nam = "pause2",
+    nam = "pause4",
     noinv = true,
     pause = 50,
     enter = function(s)
@@ -658,7 +705,6 @@ es.room {
     end,
     next = function(s)
         gamefile("game/07.lua", true)
-        return true
     end
 }
 -- endregion

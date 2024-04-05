@@ -299,6 +299,8 @@ local function makeReplica(index)
                 hw.currentId = tar.id
                 if child and child.lines then
                     hw.oldDsc = table.concat(child.lines, "^")
+                else
+                    hw.oldDsc = false
                 end
                 me():need_scene(true)
             else

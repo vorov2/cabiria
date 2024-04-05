@@ -154,6 +154,7 @@ local function outOfOrder(s, args, load)
     end
     es.sound("error")
     return {
+        "Ошибка!",
         "Нарушено соединение с контуром! Невозможно получить данные!",
         "Код ошибки: <ошибка при получении кода ошибки>",
         "Дамп:",
@@ -647,7 +648,7 @@ es.terminal {
         end,
         logs = function(s, args, load)
             if not s.vars.logs then
-                return "Ошибка! Сервис операционного логирования недоступен!"
+                return s:error("Ошибка! Сервис операционного логирования недоступен!")
             end
             if not load then
                 return "$load"
@@ -659,7 +660,7 @@ es.terminal {
         end,
         monitor = function(s, args, load)
             if not s.vars.monitor then
-                return "Ошибка! Сервис мониторинга недоступен!"
+                return s:error("Сервис мониторинга недоступен!")
             end
             local arg = s:arg(args)
             if not arg then
@@ -667,18 +668,18 @@ es.terminal {
                     return "$load"
                 end
                 return {
-                    string.format("Потребление памяти: %s%s", rnd(55, 63), "%"),
-                    string.format("Общая загрузка вычислительных блоков: %s%s", rnd(9,12), "%"),
-                    string.format("Загрузка нейронного блока: %s%s", rnd(81,99), "%"),
+                    string.format("Потребление памяти: %s%%", rnd(55, 63)),
+                    string.format("Общая загрузка вычислительных блоков: %s%%", rnd(9,12)),
+                    string.format("Загрузка нейронного блока: %s%%", rnd(81,99)),
                     "Загрузка навигационного блока: 0%",
-                    string.format("Загрузка дисковой подсистемы: %s%s", rnd(1,5), "%"),
+                    string.format("Загрузка дисковой подсистемы: %s%%", rnd(1,5)),
                     "",
                     "Синтакис:",
                     "Общие данные: monitor",
                     "Данные по сервису: monitor [название сервиса]"
                 }
             elseif not s.allServices[arg] then
-                return string.format("Неизвестный сервис: %s.", arg)
+                return string.format("Сервис не найден: %s.", arg)
             elseif not s.vars[arg] then
                 return string.format("Сервис %s не запущен.", arg)
             else
@@ -688,10 +689,10 @@ es.terminal {
                 return {
                     string.format("%s (%s):", arg, s.allServices[arg]),
                     string.format("Потребление памяти: %sKB", rnd(12,16)),
-                    string.format("Загрузка вычислительных блоков: %s%s", rnd(1, 3), "%"),
+                    string.format("Загрузка вычислительных блоков: %s%%", rnd(1, 3)),
                     "Загрузка нейронного блока: 0%",
                     "Загрузка навигационного блока: 0%",
-                    string.format("Загрузка дисковой подсистемы: %s%s", rnd(1,2), "%")
+                    string.format("Загрузка дисковой подсистемы: %s%%", rnd(1,2))
                 }
             end
         end,
@@ -717,12 +718,12 @@ es.terminal {
                 if cmd == "start" or cmd == "stop" then
                     local srv = args[2]
                     if not srv or srv == "" then
-                        return "Не задано кодовое имя сервиса."
+                        return s:error("Не задано кодовое имя сервиса.")
                     elseif not srv:any(all) then
                         return string.format("Сервис не найден: %s.", srv)
                     elseif cmd == "start" then
                         if s.vars[srv] == nil then
-                            return "Недостаточно прав для совершения операции."
+                            return s:error("Недостаточно прав для совершения операции.")
                         end
                         if s.vars[srv] then
                             return string.format("Сервис %s (%s) уже запущен.", srv,
@@ -736,7 +737,7 @@ es.terminal {
                         end
                     elseif cmd == "stop" then
                         if s.vars[srv] == nil then
-                            return "Недостаточно прав для совершения операции."
+                            return s:error("Недостаточно прав для совершения операции.")
                         end
                         if s.vars[srv] == false then
                             return string.format(
@@ -750,14 +751,14 @@ es.terminal {
                         end
                     end
                 else
-                    return string.format("Неизвестная сервисная команда: %s.", cmd)
+                    return s:error(string.format("Неизвестная сервисная команда: %s.", cmd))
                 end
             end
         end,
         reports = function(s, args, load)
             local fakes = {"lifesup", "grav", "meng", "seng"}
             if not s.vars.reports then
-                return "Ошибка! Сервис отчётов недоступен!"
+                return s:error("Сервис отчётов недоступен!")
             end
             local arg = s:arg(args)
             if not arg then
@@ -794,7 +795,7 @@ es.terminal {
                     "<ошибка чтения кода ошибки>!"
                 }
             else
-                return string.format("Неизвестный отчёт: %s.", arg)
+                return s:error(string.format("Неизвестный отчёт: %s.", arg))
             end
         end
     },
