@@ -353,7 +353,6 @@ es.room {
 }
 -- endregion
 
-
 -- region wake1
 es.room {
     nam = "wake1",
@@ -394,15 +393,15 @@ es.obj {
     nam = "transition",
     dsc = "Мне требуется несколько секунд, чтобы {прийти в себя} после этого липкого кошмара.",
     act = function(s)
-        walkin("pause1")
+        walkin("pause4")
         return true
     end
 }
 -- endregion
 
--- region pause1
+-- region pause4
 es.room {
-    nam = "pause1",
+    nam = "pause4",
     pause = 50,
     enter = function(s)
         es.stopMusic(3000)
