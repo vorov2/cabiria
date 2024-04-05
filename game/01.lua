@@ -394,6 +394,20 @@ es.obj {
     nam = "transition",
     dsc = "Мне требуется несколько секунд, чтобы {прийти в себя} после этого липкого кошмара.",
     act = function(s)
+        walkin("pause1")
+        return true
+    end
+}
+-- endregion
+
+-- region pause1
+es.room {
+    nam = "pause1",
+    pause = 50,
+    enter = function(s)
+        es.stopMusic(3000)
+    end,
+    next = function(s)
         gamefile("game/02.lua", true)
     end
 }

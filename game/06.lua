@@ -14,12 +14,13 @@ es.room {
     pic = "common/station",
     seconds = 42,
     enter = function(s)
-        es.music("dali", 1, 0)
+        es.music("violin", 1, 0)
         timer:set(1000)
     end,
     timer = function(s)
         s.seconds = s.seconds + 1
         if s.seconds == 47 then
+            es.music("dali", 1, 0, 3000)
             timer:stop()
             es.walkdlg {
                 dlg = "kofman",

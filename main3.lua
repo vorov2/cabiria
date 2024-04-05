@@ -7,7 +7,7 @@ dofile "lib/es.lua"
 room {
     nam = "main",
     enter = function(s)
-        --gamefile("game/16.lua", true)
+        --gamefile("game/05.lua", true)
         walkin("menu")
     end
 }

@@ -260,6 +260,9 @@ local function makeReplica(index)
             if replica.pic then
                 here().img = replica.pic
             end
+            if replica.disp then
+                here().dyndisp = replica.disp
+            end
             if replica.set then
                 local a,b = replica.set:pair(".")
                 if a and b then
@@ -334,6 +337,7 @@ function es.dialog(tab)
             cache_map = false,
             cache_branches = false
         },
+        dyndisp = false,
         img = false,
         npc = false,
         noinv = true,
@@ -374,7 +378,9 @@ function es.dialog(tab)
             if s.cache_map and s.cache_map[s.currentId] and s.cache_map[s.currentId].disp then
                 return s.cache_map[s.currentId].disp
             end
-            if tab.disp then
+            if s.dyndisp then
+                return s.dyndisp
+            elseif tab.disp then
                 return es.apply(tab.disp, s)
             else
                 return es.apply(s:from().disp, s:from())
