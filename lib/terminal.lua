@@ -586,11 +586,11 @@ function es.terminal(tab)
         local cmdObj = s.commands[head]
         if not cmdObj then
             s:outputPrefix(cmd)
-            s.terminal:writeLine("Неизвестная команда: " .. cmd)
+            s.terminal:writeLine(s:error("Неизвестная команда: " .. cmd))
             return true
         elseif head ~= "ver" and s:locked() and (not s.acl or not s.acl[head]) then
             s:outputPrefix(cmd)
-            s.terminal:writeLine("Нет доступа.")
+            s.terminal:writeLine(s:error("Нет доступа!"))
             return true
         else
             local res = cmdObj(s, arr, loaded)

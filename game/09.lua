@@ -12,24 +12,32 @@ es.main {
 es.room {
     nam = "intro1",
     noinv = true,
-    pic = "station/cabin1",
-    dsc = [[Я старался не спать всю ночь, чтобы не видеть кошмаров, но всё же провалился в сон незадолго до утреннего сигнала и проснулся из-за того, что выламывал себе кисть.
-    ^Я едва нашёл силы, чтобы подняться.
-    ^По голове словно били кувалдой. Я долго сидел на кровати и соображал, где нахожусь. Таблетки не помогали. Свет резал глаза.
-    ^Я собрался позже, чем обычно. И долго брёл по коридору, как пьяный, едва перебирая ногами.]],
+    pause = 50,
     enter = function(s)
-        es.music("horn")
+        es.music("whatif", 2, 0, 2000)
     end,
-    next = function(s)
-        es.music("bass", 3)
-        walkin("intro2")
-    end
+    next = "intro2"
 }
 -- endregion
 
 -- region intro2
 es.room {
     nam = "intro2",
+    noinv = true,
+    pic = "station/cabin1",
+    dsc = [[Я старался не спать всю ночь, чтобы не видеть кошмаров, но всё же провалился в сон незадолго до утреннего сигнала и проснулся из-за того, что выламывал себе кисть.
+    ^Я едва нашёл силы, чтобы подняться.
+    ^По голове словно били кувалдой. Я долго сидел на кровати и соображал, где нахожусь. Таблетки не помогали. Свет резал глаза.
+    ^Я собрался позже, чем обычно. И долго брёл по коридору, как пьяный, едва перебирая ногами.]],
+    next = function(s)
+        walkin("intro3")
+    end
+}
+-- endregion
+
+-- region intro3
+es.room {
+    nam = "intro3",
     seconds = 31,
     pic = "common/station",
     enter = function(s)
@@ -50,7 +58,7 @@ es.obj {
     nam = "clock",
     txt = "НИОС \"Кабирия\"^День пятый^^",
     dsc = function(s)
-        return string.format("%s09:12:%s", s.txt, all.intro2.seconds)
+        return string.format("%s09:12:%s", s.txt, all.intro3.seconds)
     end
 }
 -- endregion
