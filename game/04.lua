@@ -1059,8 +1059,10 @@ local block_base = {
         if p == 0 then
             return "Стоит сначала включить резак."
         elseif p < s.num then
+            es.sound("cutter")
             return "Я навожу резак на стальную жилу, сдавливаю курки и -- ничего не происходит. На блокираторе не остаётся даже следа."
         elseif p == s.num then
+            es.sound("cutter")
             return true
         else
             walkin("death")
@@ -1147,7 +1149,7 @@ es.room {
     nam = "death",
     pic = "common/flash",
     enter = function(s)
-        es.music("death")
+        es.music("bigexplosion")
     end,
     dsc = [[Я сдавил курок резака, и струя плазмы ударила по блокиратору. Неожиданно рука дрогнула, дуло резака увело в сторону, полоснув плазмой по переборкам.
     ^Cтенки шлюза мгновенно лопнули, словно кто-то вскрыл их огромным консервным ножом, и меня утянуло в темноту.]],

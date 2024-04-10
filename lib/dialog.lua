@@ -73,6 +73,7 @@ local function processAttributes(v)
         disp = false,
         mute = false,
         music = false,
+        sound = false,
         loop = false,
         fadein = false,
         fadeout = false,
@@ -286,6 +287,9 @@ local function makeReplica(index)
             if replica.music then
                 local lp = tonumber(replica.loop)
                 es.music(replica.music, lp or 1, replica.fadein, replica.fadeout)
+            end
+            if replica.sound then
+                es.sound(replica.sound)
             end
             if replica.back then
                 walk(here():from())

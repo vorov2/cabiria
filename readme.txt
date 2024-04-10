@@ -31,6 +31,38 @@ facuarmo, 286 startup
 https://freesound.org/people/facuarmo/sounds/482270/
 Creative Commons 0
 
+gladkiy, breaking_glass_mirror_Oktava_MK-012.wav
+https://freesound.org/people/gladkiy/sounds/276937/
+Creative Commons 0
+
+laffik, electricity.wav
+https://freesound.org/people/laffik/sounds/585169/
+Creative Commons 0
+
+Robinhood76, 11680 electric paralyze bomb.wav
+https://freesound.org/people/Robinhood76/sounds/707687/
+Attribution NonCommercial 4.0
+
+RutgerMuller, Metallic Noise.wav
+https://freesound.org/people/RutgerMuller/sounds/51044/
+Creative Commons 0
+
+jobro, Explosion 2.wav
+https://freesound.org/people/jobro/sounds/35459/
+Attribution 3.0
+
+tranzfusion, Fire Extinguisher
+https://freesound.org/people/tranzfusion/sounds/642961/
+Creative Commons 0
+
+jokallset, Plasma cutter Ntg3.wav
+https://freesound.org/people/jokallset/sounds/395890/
+Creative Commons 0
+
+thebraindrinker, field recording kitchen bam.squeak.wav
+https://freesound.org/people/thebraindrinker/sounds/397267/
+Creative Commons 0
+
 *Installation*
 
 "Abyss of light" is a cross platform game and is able to run on Windows, Linux and Mac OS X.

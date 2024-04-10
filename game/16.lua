@@ -539,11 +539,19 @@ es.room {
         "",
         "",
         "ЗВУКОВЫЕ ЭФФЕКТЫ (freesound.org)",
-        "gabemille74 (BreathOfDeath)",
-        "StephenSaldanha (SRS_Cinematic_Hit)",
-        "GowlerMusic (Computer Sound)",
-        "Breviceps (Error Signal 1)",
-        "facuarmo (286 startup)",
+        "gabemille74",
+        "StephenSaldanha",
+        "GowlerMusic",
+        "Breviceps",
+        "facuarmo",
+        "gladkiy",
+        "laffik",
+        "Robinhood76",
+        "RutgerMuller",
+        "jobro",
+        "tranzfusion",
+        "jokallset",
+        "thebraindrinker",
         "",
         "",
         "СИЛУЭТЫ ПЕРСОНАЖЕЙ",
@@ -566,7 +574,7 @@ es.room {
         local fnt = sprite.fnt(config.font, config.size)
         local height = fnt:height() * 1.2
         local theight = height * len
-        local spr = es.sprite(400, theight, config.bg)
+        local spr = es.sprite(300, theight, config.bg)
         local shift = 0
         for i,v in ipairs(s.credits) do
             if v ~= "" then
@@ -585,7 +593,7 @@ es.room {
         if not s.cache then
             s.cache,s.height = s:make()
         end
-        s.cache:copy(0, s.height - s.offset, 400, s.offset, sprite.scr(), 50, 0)
+        s.cache:copy(0, s.height - s.offset, 300, s.offset, sprite.scr(), 50, 0)
         return true
     end
 }

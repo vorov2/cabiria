@@ -1170,6 +1170,7 @@ es.room {
 es.room {
     nam = "anim1",
     pause = 60,
+    bg = "bg",
     pic = "station/walk1",
     disp = "НИОС \"Кабирия\"",
     decor = [[19:02]],
@@ -1179,6 +1180,7 @@ es.room {
 es.room {
     nam = "anim2",
     pause = 60,
+    bg = "bg",
     pic = "station/walk2",
     disp = "НИОС \"Кабирия\"",
     decor = [[19:13]],
@@ -1188,6 +1190,7 @@ es.room {
 es.room {
     nam = "anim3",
     pause = 60,
+    bg = "bg",
     pic = "station/walk3",
     disp = "НИОС \"Кабирия\"",
     decor = [[19:27]],
@@ -1197,6 +1200,7 @@ es.room {
 es.room {
     nam = "anim4",
     pause = 60,
+    bg = "bg",
     pic = "station/diner",
     disp = "НИОС \"Кабирия\"",
     decor = [[19:48]],
@@ -1206,6 +1210,7 @@ es.room {
 es.room {
     nam = "anim5",
     pause = 100,
+    bg = "bg",
     pic = "station/corridor1",
     disp = "НИОС \"Кабирия\"",
     decor = [[20:17]],
