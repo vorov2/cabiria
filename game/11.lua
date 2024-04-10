@@ -12,6 +12,15 @@ es.main {
 -- region intro1
 es.room {
     nam = "intro1",
+    noinv = true,
+    pause = 50,
+    next = "intro2"
+}
+-- endregion
+
+-- region intro2
+es.room {
+    nam = "intro2",
     seconds = 41,
     pic = "common/station",
     enter = function(s)
@@ -33,7 +42,7 @@ es.obj {
     nam = "clock",
     txt = "НИОС \"Кабирия\"^^",
     dsc = function(s)
-        return string.format("%sОсталось до схода с орбиты: 04:18:%d", s.txt, all.intro1.seconds)
+        return string.format("%sОсталось до схода с орбиты: 04:18:%d", s.txt, all.intro2.seconds)
     end
 }
 -- endregion
