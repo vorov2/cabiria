@@ -719,7 +719,8 @@ es.room {
         "chamber",
         "comp",
         "marytan4",
-        "simonova1"
+        "simonova1",
+        "sinitsin"
     },
     way = {
         path { "В холл", "hall1" }
@@ -806,6 +807,22 @@ es.obj {
             return true
         else
             return "Думаю, не стоит ей мешать."
+        end
+    end
+}
+
+es.obj {
+    nam = "sinitsin",
+    done = false,
+    cnd = "{chamber}.touch == 2"
+    dsc = "За соседним столом работает {Синицын}.",
+    act = function(s)
+        if not s.done then
+            s.done = true
+            es.walkdlg("sinitsin.head")
+            return true
+        else
+            return "У него и без меня хватает дел."
         end
     end
 }
