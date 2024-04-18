@@ -4,7 +4,7 @@ dofile "lib/es.lua"
 es.main {
     chapter = "13",
     onenter = function(s)
-        es.music("overcome", 2)
+        es.music("tragedy", 2)
         take("skiagram")
         walkin("intro1")
     end
