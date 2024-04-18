@@ -1,4 +1,4 @@
-"Abyss of light", an interactive novel for INSTEAD (https://instead.hugeping.ru/)
+"Abyss of light", an interactive novella for INSTEAD (https://instead.hugeping.ru/)
 Discussion board: http://instead.syscall.ru/forum/viewtopic.php?id=1372
 FOR INSTALL NOTES PLEASE SCROLL TO THE BOTTOM OF THE DOCUMENT
 
@@ -69,9 +69,9 @@ Creative Commons 0
 
 *Installation*
 
-"Abyss of light" is a cross platform game and is able to run on Windows, Linux and Mac OS X.
+"Abyss of light" is a cross platform game and is able to run on Windows, Linux and Mac OS.
 The game is available as a cross platform package (without INSTEAD) and as a standalone
 package (with INSTEAD for Windows). If you have downloaded the latter and you are not
 a Windows user, please obtain a version of INSTEAD for your platform: https://instead.hugeping.ru/
 The game itself is located in appdata/games/cabiria folder. You don't have to download
-it twice.
+it one more time.

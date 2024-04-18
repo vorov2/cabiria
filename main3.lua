@@ -23,6 +23,7 @@ local function getVersion()
             return "Версия: ".. line
         end
     end
+    io.close(file)
 end
 
 es.room {
