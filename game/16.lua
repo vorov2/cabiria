@@ -488,7 +488,7 @@ es.obj {
 -- region pause6
 es.room {
     nam = "pause6",
-    pause = 100,
+    pause = 60,
     enter = function(s)
         es.music("shutdown")
     end,
@@ -508,8 +508,9 @@ local config = {
 es.room {
     nam = "credits_roll",
     bg = "clean",
+    counter = 0,
     enter = function(s)
-        es.music("premonition")
+        es.music("premonition", 2)
         timer:set(1000/config.fps)
     end,
     offset = 0,
@@ -540,12 +541,18 @@ es.room {
         "",
         "",
         "ЗВУКОВЫЕ ЭФФЕКТЫ (freesound.org)",
-        "gabemille74 StephenSaldanha",
-        "GowlerMusic Breviceps",
-        "facuarmo gladkiy",
-        "laffik Robinhood76",
-        "RutgerMuller jobro",
-        "tranzfusion jokallset",
+        "gabemille74",
+        "StephenSaldanha",
+        "GowlerMusic",
+        "Breviceps",
+        "facuarmo",
+        "gladkiy",
+        "laffik",
+        "Robinhood76",
+        "RutgerMuller",
+        "jobro",
+        "tranzfusion",
+        "jokallset",
         "thebraindrinker",
         "",
         "",
@@ -560,6 +567,7 @@ es.room {
         "",
         "",
         "",
+        "",
         "МОСКВА 2024",
         ""
     },
@@ -568,7 +576,7 @@ es.room {
         local fnt = sprite.fnt(config.font, config.size)
         local height = fnt:height() * 1.2
         local theight = height * len
-        local spr = es.sprite(300, theight, config.bg)
+        local spr = es.sprite(400, theight, config.bg)
         local shift = 0
         for i,v in ipairs(s.credits) do
             if v ~= "" then
@@ -579,7 +587,9 @@ es.room {
         return spr,theight
     end,
     timer = function(s)
-        if not snd.music_playing() then
+        s.counter = s.counter + 1
+        if s.counter == 2400 then
+            es.stopMusic(1000)
             timer:stop()
             instead:restart()
         end
@@ -587,7 +597,7 @@ es.room {
         if not s.cache then
             s.cache,s.height = s:make()
         end
-        s.cache:copy(0, s.height - s.offset, 300, s.offset, sprite.scr(), 50, 0)
+        s.cache:copy(0, s.height - s.offset, 400, s.offset, sprite.scr(), 80, 0)
         return true
     end
 }
