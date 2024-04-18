@@ -219,7 +219,7 @@ es.room {
     enter = function(s)
         if not s.mus then
             s.mus = true
-            es.music("fatigue2", 2, 0, 2000)
+            es.music("whatif", 2, 0, 2000)
         end
     end,
     onexit = function(s, t)
@@ -828,7 +828,7 @@ es.room {
     nam = "gate",
     pic = "ship/gate",
     disp = "Шлюз",
-    dsc = "Я вишу на лестнице в тонкой кишке передаточного шлюза, где едва помещается один человек в скафандре.",
+    dsc = "Я вишу на лестнице в тонкой кишке передаточного шлюза, где с трудом помещается один человек в скафандре.",
     onexit = function(s, t)
         if t.nam == "corridor" and all.hatch2.sealed then
             p "Сейчас отсек герметизирован."
@@ -838,8 +838,11 @@ es.room {
             return false
         elseif t.nam == "blockpane" then
             local ret = testPane()
-            if ret == true then
+            if ret == true and have("flash") then
                 p "Я включаю фонарик и поднимаюсь чуть выше по лестнице. Света совсем мало, таким фонарём только радужку глаза просвечивать, но это лучше, чем ничего."
+                return true
+            elseif ret == true and not have("flash") then
+                p "Я поднимаюсь чуть выше по лестнице. Здесь ещё темнее."
                 return true
             else
                 p(ret)
