@@ -375,7 +375,6 @@ es.room {
     end,
     next = function(s)
         gamefile("game/16.lua", true)
-        return true
     end
 }
 -- endregion
