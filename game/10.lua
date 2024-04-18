@@ -2243,6 +2243,7 @@ es.obj {
             return true
         elseif not s.fire and have("stick") then
             s.done = true
+            enable "#deck"
             es.walkdlg("lysanov.open_door")
             return true
         elseif not s.fire and have("cutter") and not s.firefixed then
