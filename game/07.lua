@@ -814,7 +814,7 @@ es.obj {
 es.obj {
     nam = "sinitsin",
     done = false,
-    cnd = "{chamber}.touch == 2"
+    cnd = "{chamber}.touch == 2",
     dsc = "За соседним столом работает {Синицын}.",
     act = function(s)
         if not s.done then
