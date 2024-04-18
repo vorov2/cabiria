@@ -63,6 +63,10 @@ thebraindrinker, field recording kitchen bam.squeak.wav
 https://freesound.org/people/thebraindrinker/sounds/397267/
 Creative Commons 0
 
+typeoo, air_hiss_tubes_loop.wav
+https://freesound.org/people/typeoo/sounds/521501/
+Creative Commons 0
+
 *Installation*
 
 "Abyss of light" is a cross platform game and is able to run on Windows, Linux and Mac OS X.
