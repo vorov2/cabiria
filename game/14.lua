@@ -2125,7 +2125,7 @@ es.room {
     disp = "Коридор корабля",
     dsc = [[Глаза всё ещё не привыкли к яркому свету. Кажется, всё вокруг застилает снежная белизна.]],
     enter = function(s)
-        es.music("tragedy", 2)
+        es.music("tragedy", 2, 0, 3000)
     end,
     obj = { "device", "minaeva2", "vera19" }
 }
