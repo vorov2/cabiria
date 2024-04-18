@@ -197,7 +197,7 @@ es.room {
     enter = function(s)
         if not s.mus then
             s.mus = true
-            es.music("lotus", 2, 2000)
+            es.music("lotus", 3, 2000)
         end
     end,
     dsc = [[В столовой нет никого, кроме нас -- видимо, остальные сотрудники лаборатории уже успели позавтракать, или же мы, напротив, заметно опережаем график.]],
@@ -308,7 +308,7 @@ local option_base = {
 es.obj(option_base) {
     nam = "option1",
     idx = 1,
-    dsc = [[Лицевая панель устройства раздела на четыре секции, первые три из которых соответствуют тому или иному приёму пищи, а последняя -- напиткам. Сейчас подсвечиваются только "Завтрак" с напитками. Выбор на завтрак -- самый скудный. Под затёртой выштамповкой "комплексное питание" размещены серенькие таблички с прорезями для винтового ключа (завтрак {№1},]],
+    dsc = [[Лицевая панель устройства разделена на четыре секции, первые три из которых соответствуют тому или иному приёму пищи, а последняя -- напиткам. Сейчас подсвечиваются только "Завтрак" с напитками. Выбор на завтрак -- самый скудный. Под затёртой выштамповкой "комплексное питание" размещены серенькие таблички с прорезями для винтового ключа (завтрак {№1},]],
     cont = "Сырник, джем, тостовый хлеб"
 }
 
@@ -521,6 +521,9 @@ es.room {
     pic = "station/diner",
     disp = "Столовая",
     dsc = [[Мы сидим за столиком у двери. Темы для беседы начинают иссякать.]],
+    enter = function(s)
+        es.music("fatigue2", 1, 0, 3000)
+    end,
     onexit = function(s, t)
         if t.nam == "main" then
             es.walkdlg {
@@ -626,7 +629,7 @@ es.room {
         elseif t.nam == "interlude2" then
             p "Туда мне пока что не нужно."
             return false
-        elseif t.nam == "lab1" and not all.planet1.done then
+        elseif t.nam == "lab1" then
             p "Надо подождать Марутяна."
             return false
         end
@@ -702,11 +705,11 @@ es.room {
     mus = false,
     pic = "station/lab",
     disp = "Лаборатория",
-    dsc = [[Лаборатория напоминает проявочную в фотоателье, тонущую в треске вычислительных аппаратов. Всё вокруг затягивает плотный красный свет.]],
+    dsc = [[Лаборатория напоминает проявочную в фотоателье, тонущую в треске вычислительных аппаратов. Всё вокруг заливает плотный красный свет.]],
     enter = function(s)
         if not s.mus then
             s.mus = true
-            es.music("juxtaposition")
+            es.music("juxtaposition", 2, 0, 3000)
         end
     end,
     onexit = function(s, t)
@@ -716,45 +719,15 @@ es.room {
         end
     end,
     obj = {
-        "chamber",
-        "comp",
         "marytan4",
         "simonova1",
-        "sinitsin"
+        "sinitsin",
+        "chamber",
+        "comp"
     },
     way = {
         path { "В холл", "hall1" }
     }
-}
-
-es.obj {
-    nam = "chamber",
-    unbar = false,
-    touch = 0,
-    dsc = function(s)
-        if not s.unbar then
-            return "Главная роль здесь отводится {камере содержания} -- огромной колонне с непрозрачным стеклом, затянутым тенью."
-        else
-            return "Главная роль здесь отводится {камере содержания} -- огромной колонне с толстым стеклом, собирающем множество алых отражений."
-        end
-    end,
-    act = function(s)
-        if not s.unbar then
-            s.unbar = true
-            es.walkdlg("marytan.unbar")
-            return true
-        elseif s.touch == 0 then
-            s.touch = 1
-            es.walkdlg("marytan.touch1")
-            return true
-        elseif s.touch == 1 then
-            s.touch = 2
-            es.walkdlg("marytan.touch2")
-            return true
-        elseif s.touch > 1 then
-            return "Лучше воспользоваться терминалом."
-        end
-    end
 }
 
 es.obj {
@@ -764,32 +737,15 @@ es.obj {
 }
 
 es.obj {
-    nam = "comp",
-    done = false,
-    unlocked = false,
-    dsc = "Рядом с камерой содержания стоит {вычислительный аппарат}.",
-    used = function(s, t)
-        if t.nam == "card" then
-            s.unlocked = true
-            walkin("lab.terminal")
-            return true
-        end
-    end,
-    act = function(s)
-        s.unlocked = false
-        walkin("lab.terminal")
-        return true
-    end
-}
-
-es.obj {
     nam = "marytan4",
+    done = false,
     dsc = "{Марутян} стоит, сцепив на груди руки, и хитро посматривает на меня, сдвинув кустистые брови, из которых толстыми остями торчат седые волоски.",
     act = function(s)
         if all.comp.done then
             es.walkdlg("marytan.nubolids")
             return true
         else
+            s.done = true
             es.walkdlg("marytan.lab")
             return true
         end
@@ -827,6 +783,7 @@ es.obj {
     end
 }
 
+-- region terminal
 es.terminal {
     nam = "lab.terminal",
     locked = function(s)
@@ -923,6 +880,66 @@ es.terminal {
         if s.vars.kray + s.vars.ion > 0 then
             all.comp.done = true
             walkin("nubolids")
+            return true
+        end
+    end
+}
+-- endregion
+
+es.obj {
+    nam = "chamber",
+    unbar = false,
+    touch = 0,
+    dsc = function(s)
+        if not s.unbar then
+            return "^^Главная роль здесь отводится {камере содержания} -- огромной колонне с непрозрачным стеклом, затянутым тенью."
+        else
+            return "^^Главная роль здесь отводится {камере содержания} -- огромной колонне с толстым стеклом, собирающем множество алых отражений."
+        end
+    end,
+    act = function(s)
+        if not s.unbar then
+            s.unbar = true
+            if not all.marytan4.done then
+                all.marytan4.done = true
+                es.walkdlg("marytan.pre_unbar")
+            else
+                es.walkdlg("marytan.unbar")
+            end
+            return true
+        elseif s.touch == 0 then
+            s.touch = 1
+            es.music("ocean", 1, 0, 3000)
+            es.walkdlg("marytan.touch1")
+            return true
+        elseif s.touch == 1 then
+            s.touch = 2
+            es.walkdlg("marytan.touch2")
+            return true
+        elseif s.touch > 1 then
+            return "Лучше воспользоваться терминалом."
+        end
+    end
+}
+
+es.obj {
+    nam = "comp",
+    done = false,
+    unlocked = false,
+    dsc = "В камеру вмонитрован {вычислительный аппарат}.",
+    used = function(s, t)
+        if t.nam == "card" then
+            s.unlocked = true
+            walkin("lab.terminal")
+            return true
+        end
+    end,
+    act = function(s)
+        if not all.marytan4.done then
+            return "Лучше сначала поговорить с Марутяном."
+        else
+            s.unlocked = false
+            walkin("lab.terminal")
             return true
         end
     end
@@ -1102,7 +1119,7 @@ es.room {
     nam = "pause2",
     pause = 60,
     enter = function(s)
-        es.music("bass", 2, 2000, 3000)
+        es.music("whatif", 2, 2000, 3000)
     end,
     next = "corridor2"
 }
