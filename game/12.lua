@@ -395,6 +395,7 @@ es.terminal {
                 end
                 return {
                     str,
+                    "",
                     "Доступные системы:",
                     string.format("[1] Сервис освещения: %s", s:onoff(s.vars.lux_on)),
                     string.format("[2] Сервис контраста: %s", s:onoff(s.vars.contrast_on)),
@@ -593,10 +594,13 @@ es.terminal {
             if not arg or arg ~= s.vars.snapshot or not s.vars.snapshot then
                 local str = ""
                 if not arg then
+                    es.sound("error")
                     str = "Не задан ключ буфера."
                 elseif not s.vars.snapshot then
+                    es.sound("error")
                     str = "Буфер для печати пуст."
                 elseif arg ~= s.vars.snapshot then
+                    es.sound("error")
                     str = string.format("Некорректный ключ буфера: [%s]", arg)
                 end
                 return {
