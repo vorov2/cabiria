@@ -322,9 +322,7 @@ function es.terminal(tab)
     tab.noinv = true
     tab.fromLocation = false
     tab.terminal = initializeTerminal()
-    if not tab.vars then
-        tab.vars = {}
-    end
+    tab.vars = tab.vars or {}
     tab.vars["timer"] = false
     tab.vars["anim"] = 1
     tab.vars["next"] = false
@@ -337,12 +335,12 @@ function es.terminal(tab)
     end
     tab.enter = function(s)
         timer:set(math.floor(1000 / 10))
-        if not tab.vars["fromLocation"] then
-            tab.vars["fromLocation"] = s:from().nam
-        end
         if not s.loaded then
             s:loadOnlyData()
             s.loaded = true
+        end
+        if not tab.fromLocation then
+            tab.fromLocation = s:from().nam
         end
         s.terminal:writeLine("Загрузка...")
         s.terminal:writeLine("<empty>")
@@ -378,6 +376,7 @@ function es.terminal(tab)
     tab.save = function(s)
         local m = _("main")
         m.state[s.nam] = {
+            fromLocation = s.fromLocation,
             buffer = s.terminal.lines,
             text = s.terminal.input.text,
             history = s.terminal.input.history,
@@ -398,6 +397,7 @@ function es.terminal(tab)
         local m = _("main")
         if m.state and m.state[s.nam] then
             local st = m.state[s.nam]
+            s.fromLocation = st.fromLocation
             s.terminal.lines = st.buffer
             s.terminal.input.text = st.text
             s.terminal.input.history = st.history
@@ -526,10 +526,10 @@ function es.terminal(tab)
             if s.before_exit then
                 local res = es.apply(s.before_exit, s)
                 if not res then
-                    walkout(s.vars.fromLocation)
+                    walkout(s.fromLocation)
                 end
             else
-                walkout(s.vars.fromLocation)
+                walkout(s.fromLocation)
             end
             return true
         elseif head == "acl" then

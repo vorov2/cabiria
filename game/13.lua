@@ -164,6 +164,7 @@ es.obj {
         if w.nam == "skiagram" and not all.coffee.done then
             return "Я бы предпочёл сначала рассказать ему о кофе."
         elseif w.nam == "skiagram" then
+            es.music("whatif", 2, 0, 3000)
             purge(w.nam)
             es.walkdlg("majorov.skiagram")
             return true
@@ -252,7 +253,7 @@ es.obj {
 es.obj {
     nam = "find_button",
     cnd = "not {toplevel}.done",
-    dsc = "Где-то здесь должна быть {кнопка}, открывающая выход.",
+    dsc = "Где-то должна быть {кнопка}, открывающая выход.",
     act = function(s)
         all.toplevel.done = true
         return "Я вслепую нащупываю кнопку и с трудом нажимаю её -- она упрямо сопротивляется мне, не хочет выпускать наружу."
@@ -315,7 +316,7 @@ es.room {
     nam = "deck",
     pic = "station/deck",
     disp = "Рубка",
-    dsc = [[Рубка встречает колким светом. Горят мониторы, мерцают на панелях огни. Один аварийный люминофор всё ещё расплёскивает по стенам кровавые отблески и бьёт по глазам, заставляет уйти.]],
+    dsc = [[Рубка встречает колким светом. Горят мониторы, мерцают на панелях огни. Один аварийный люминофор всё ещё расплёскивает по стенам кровавые отблески и бьёт по глазам, гонит вон.]],
     onexit = function(s, t)
         if t.nam == "neardeck" then
             p "Убежать уже не получится."
@@ -427,7 +428,13 @@ es.terminal {
                 string.format("Двигательный блок \"%s\" не отвечает.", tab[num])
             }
         end
-    }
+    },
+    before_exit = function(s)
+        if all.deckcomp.done and not snd.music_playing() then
+            es.music("tragedy", 2)
+            return false
+        end
+    end
 }
 -- endregion
 
@@ -539,6 +546,7 @@ es.obj {
     nam = "comps",
     dsc = "Какие-то {аппараты} ещё работают, мигают индикаторы, шуршат жёсткие диски, процессоры производят расчёты для несуществующих двигательных блоков.",
     act = function(s)
+        es.sound("break")
         es.walkdlg("me.step")
         return true
     end
@@ -548,6 +556,7 @@ es.obj {
     nam = "pain",
     dsc = "Из-за режущей {боли} в боку тяжело дышать.",
     act = function(s)
+        es.sound("break")
         es.walkdlg("me.step")
         return true
     end
@@ -650,7 +659,7 @@ es.obj {
     dsc = "Я вглядываюсь в наступающий на меня из коридора {сумрак}.",
     act = function(s)
         s.done = true
-        return "Я пытаюсь всмотреться в темноту."
+        return "Я всматриваюсь в темноту."
     end
 }
 

@@ -57,7 +57,7 @@ es.room {
     preact = function(s)
         if not s.mus then
             s.mus = true
-            es.music("juxtaposition", 1, 0, 3000)
+            es.music("juxtaposition", 3, 0, 3000)
         end
     end,
     onexit = function(s, t)
@@ -86,6 +86,7 @@ es.room {
 
 es.obj {
     nam = "bandage",
+    cnd = "not {minaeva}.done",
     dsc = "Я сижу у стены с {перебинтованной головой}. В ушах звенит, как после контузии.",
     act = "Повязку у меня на голове сменили, а перед этим залили рану едким медицинским клеем, из-за чего теперь кажется, что череп у меня расходится трещинами, как битый шар для боулинга."
 }
@@ -133,8 +134,8 @@ es.obj {
 
 es.obj {
     nam = "trash",
-    dsc = "Мусорный {контейнер} у стены завален окровавленными бинтами.",
-    act = "Нет у меня желания его разглядывать.",
+    dsc = "Рядом с ней примостился мусорный {контейнер}, доверху заваленный окровавленными бинтами.",
+    act = "Нет у меня желания разглядывать его содержимое.",
     used = function(s, w)
         if w.nam == "bottle" and w.full > 0 then
             return "В бутылке ещё есть вода, зачем её выбрасывать?"
@@ -149,9 +150,11 @@ es.obj {
     nam = "meds",
     need = false,
     found = false,
-    dsc = "На столе рядом стоит открытый {ящик} с множеством склянок.",
+    dsc = "Чуть дальше от меня, на шатком столике, стоит открытый металлический {ящик} с множеством склянок.",
     act = function(s)
-        if not s.found then
+        if not all.minaeva.task then
+            return "Мне там ничего не нужно."
+        elseif not s.found then
             s.found = true
             return "Я долго копаюсь в содержимом ящика, прежде чем мне попадается маленький пузырёк с антисептиком."
         else
@@ -165,7 +168,7 @@ es.obj {
     taken = false,
     cnd = "{meds}.found",
     disp = es.tool "Антисептик",
-    dsc = "{Пузырёк с антисептиком} как назло оказывается на самом дне.",
+    dsc = "{Пузырёк с антисептиком} -- броский из-за яркой оранжевой этикетки -- провалился на самое дно ящика.",
     inv = "Пузырёк с антисептиком, надо отдать его Минаевой.",
     tak = function(s)
         s.taken = true
@@ -178,7 +181,7 @@ es.obj {
     task = false,
     done = false,
     simonova = false,
-    dsc = "{Минаева} прижигает каким-то вонючим раствором рану на голове",
+    dsc = "^{Минаева} прижигает каким-то вонючим раствором рану на голове",
     act = function(s)
         if s.done and (not all.simonova.done or s.simonova) then
             return "Ей и без меня есть чем заняться."
@@ -254,6 +257,9 @@ es.room {
         elseif t.nam == "interlude1" and s.stage and not all.vera.done then
             all.vera.done = true
             es.walkdlg("vera.wait")
+            return false
+        elseif t.nam == "interlude1" then
+            es.walkdlg("vera.wait2")
             return false
         end
     end,
@@ -348,7 +354,7 @@ es.room {
     nam = "med2",
     pic = "station/med2",
     disp = "Медотсек 02",
-    dsc = [[Во втором медотсеке стоит гул от работающих аппаратов, а свет, как мне кажется, светит даже ярче, чем в остальном блоке.]],
+    dsc = [[Во втором медотсеке стоит гул от работающих аппаратов.]],
     obj = { "machine", "efimova" },
     way = {
         path { "Выйти", "reception" }
@@ -398,7 +404,7 @@ es.obj {
     nam = "patient",
     done = false,
     branch = "patient",
-    dsc = "На койке лежит {перебинтованный человек}, из руки которого торчит катетер. Экран рядом с кроватью показывает сбичивый сердечный ритм, похожий на сейсмические колебания.",
+    dsc = "На койке лежит {перебинтованный человек}, из руки которого торчит катетер. Экран рядом с кроватью показывает сбивчивый сердечный ритм, похожий на сейсмические колебания.",
     act = function(s)
         es.walkdlg("sinitsin.patient")
         return true
@@ -1184,7 +1190,7 @@ es.room {
 es.room {
     nam = "outro1",
     noinv = true,
-    pause = 10,
+    pause = 20,
     enter = function(s)
         es.stopMusic(1000)
     end,

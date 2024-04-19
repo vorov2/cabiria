@@ -1,42 +1,42 @@
 local std = stead
-std:reset("game/11.lua")
+std:reset("game/14.lua")
 std 'game':ini()
+std("nearlab").__from = std "intro1"
+std("nearlab").__visits = 1
+std("@theme").vars = { ["win.col.alink"] = "#0094FF", ["win.col.fg"] = "lightgray", ["win.fnt.size"] = "18", ["scr.gfx.bg"] = "theme/bg.jpg", ["win.col.link"] = "#649BC1" }
+std("@theme").reset_vars = { ["win.col.alink"] = "#0094ff", ["win.col.fg"] = "#d3d3d3", ["win.fnt.size"] = "18", ["scr.gfx.bg"] = "theme/bg.jpg", ["win.col.link"] = "#649bc1" }
+std("intro1").__visits = 1
+std("intro1").minutes = 31
+std("intro1").__from = std "main"
+std("intro1").seconds = 55
+std("@timer").__timer = 0
 std("@instead").__sound = nil
-std("@instead").__music_loop = -1
+std("@instead").__music_loop = 2
 std("@instead").__music_fadeout = 4000
 std("@instead").__need_fading = false
-std("@instead").__sound_loop = 1
-std("@instead").__music_fadein = 4000
-std("@instead").__music = nil
+std("@instead").__restart = nil
+std("@instead").__music_fadein = -1
+std("@instead").__music = "sfx/doom.ogg"
 std("@instead").__autosave_slot = nil
 std("@instead").__autosave = nil
 std("@instead").__menu = nil
+std("@instead").__sound_loop = 1
 std("@instead").__sound_channel = -1
-std("@instead").__restart = nil
 std("game").player = pl
 std("game").__started = true
 std("game").__pevents = nil
-std("game").__reaction = "{# 1|Выйти}"
+std("game").__reaction = "{cutter|<g:theme/inv.png> Плазменный резак}"
 std("game").__aevents = nil
-std("game").__lastdisp = "Белые стены медотсека давят, не дают дышать. Если долго смотришь в одну точку, всё вокруг рассеивается в предобморочном шуме, и глаза заливает белизна.^^Я сижу у стены с {bandage|перебинтованной головой}. В ушах звенит, как после контузии. {thirsty|Горло} воспалилось от жажды. На полу валяется разодранная полиэтиленовая {bottles|пачка бутылок} с обогащённой кислородом водой, которую, видимо, притащили с \"Грозного\". Мусорный {trash|контейнер} у стены завален окровавленными бинтами. На столе рядом стоит открытый {meds|ящик} с множеством склянок.  {minaeva|Минаева} прижигает каким-то вонючим раствором рану на голове {andreev|Андреева}, которого перед этим щедро напичкали обезболивающим, и он вперился в стену мутным взглядом, как слепой или контуженный."
+std("game").__lastdisp = "Мне кажется, что каждый шаг может стать последним -- пол раскроит жуткая трещина, меня затянет в кипящие огнём недра станции, -- и я придерживаюсь за трещащий леер в стене, как за спасательную верёвку.^^В спину мне бьют чьи-то надрывные {screams|крики} -- кто-то пытается кричать, когда воздух в лёгких почти вышел. Дверь в {labdoor|лабораторию} открыта, и из неё падает на пол длинная синяя тень."
 std("game").__lreaction = nil
-std("game").__time = 56
-std("@theme").vars = { ["win.col.fg"] = "lightgray", ["win.col.link"] = "#649BC1", ["win.fnt.size"] = "18", ["win.col.alink"] = "#0094FF", ["scr.gfx.bg"] = "theme/bg.jpg" }
-std("@theme").reset_vars = { ["win.col.fg"] = "#d3d3d3", ["win.col.link"] = "#649bc1", ["win.fnt.size"] = "18", ["win.col.alink"] = "#0094ff", ["scr.gfx.bg"] = "theme/bg.jpg" }
+std("game").__time = 8
+std("cutter").__nr_take = 1
 std("@iface").__raw = nil
-std("intro2").__visits = 1
-std("intro2").__from = std "intro1"
-std("intro2").seconds = 36
-std("@snapshots").data = { default = "local std = stead\nstd:reset(\"game/10.lua\")\nstd 'game':ini()\nstd(\"rnd1#0\").__disabled = true\nstd(\"left1\").__nr_act = 1\nstd(\"swim2\").__nr_act = 1\nstd(\"swim2\").done = true\nstd(\"right2\").__nr_act = 1\nstd(\"wait_wakeup\").__visits = 1\nstd(\"wait_wakeup\").__from = std \"lake6\"\nstd(\"wait_wakeup\").counter = 50\nstd(\"ahead1\").__nr_act = 1\nstd(\"@theme\").vars = { [\"win.col.fg\"] = \"lightgray\", [\"win.col.link\"] = \"#649BC1\", [\"win.fnt.size\"] = \"18\", [\"win.col.alink\"] = \"#0094FF\", [\"scr.gfx.bg\"] = \"theme/bg.jpg\" }\nstd(\"@theme\").reset_vars = { [\"win.col.fg\"] = \"#d3d3d3\", [\"win.col.link\"] = \"#649bc1\", [\"win.fnt.size\"] = \"18\", [\"win.col.alink\"] = \"#0094ff\", [\"scr.gfx.bg\"] = \"theme/bg.jpg\" }\nstd(\"rest\").__nr_act = 1\nstd(\"rest\").done = true\nstd(\"lake1\").__from = std \"main\"\nstd(\"lake1\").__visits = 1\nstd(\"replica_1#0\").__nr_act = 24\nstd(\"intro1\").__visits = 1\nstd(\"intro1\").__from = std \"wakeup1\"\nstd(\"intro1\").seconds = 17\nstd(\"ahead2\").__nr_act = 1\nstd(\"rnd4#0\").__disabled = nil\nstd(\"intruders\").__visits = 1\nstd(\"intruders\").__from = std \"med1\"\nstd(\"intruders\").counter = 50\nstd(\"try_to_swim\").__nr_act = 1\nstd(\"door1\").__nr_act = 3\nstd(\"player\").__in_onexit = false\nstd(\"player\").__need_scene = nil\nstd(\"player\").__in_exit = false\nstd(\"player\").__moved = nil\nstd(\"player\").room = std \"b1\"\nstd(\"player\").__closed = nil\nstd(\"player\").obj = std.list {  }:__dirty(true)\nstd(\"player\").__inv_disabled = nil\nstd(\"player\").__in_afterwalk = false\nstd(\"med1\").__visits = 1\nstd(\"med1\").obj = std.list { \"robe\", \"door1\", \"panel1\", \"smell1\", \"catheter\", \"patch\" }:__dirty(true)\nstd(\"med1\").__from = std \"intro1\"\nstd(\"med1\").mus = true\nstd(\"@timer\").__timer = 0\nstd(\"lake5\").__from = std \"lake_rnd_hub\"\nstd(\"lake5\").__visits = 2\nstd(\"@instead\").__sound = nil\nstd(\"@instead\").__music_loop = -1\nstd(\"@instead\").__music_fadeout = -1\nstd(\"@instead\").__need_fading = false\nstd(\"@instead\").__sound_loop = 1\nstd(\"@instead\").__music_fadein = -1\nstd(\"@instead\").__music = \"sfx/note.ogg\"\nstd(\"@instead\").__autosave_slot = nil\nstd(\"@instead\").__autosave = nil\nstd(\"@instead\").__menu = nil\nstd(\"@instead\").__sound_channel = -1\nstd(\"@instead\").__restart = nil\nstd(\"swim1\").try = true\nstd(\"swim1\").done = true\nstd(\"swim1\").__nr_act = 2\nstd(\"lake_rnd\").__visits = 2\nstd(\"lake_rnd\").alldsc = { \"Я всё же не выдерживаю и ненадолго ложусь звездой, чтобы собраться с силами, закрываю глаза и чувствую, как медленно ухожу под воду. Нет! Мне надо плыть!\", \"Вокруг меня на поднявшихся из-за ветра волнах играют яркие отблески Луны.\", \"Кажется, берег так далеко, что скоро и вовсе исчезнет из вида. Может, зря я сражаюсь с этими течениями? Может, они хотят помочь мне, вернуться меня на сушу?\", \"Я обязательно должен выплыть, я же -- отличный пловец. К тому же меня ждут. Меня точно ждут. Она наверняка уже волнуется.\", \"Такое ощущение, что я плаваю здесь несколько дней подряд.\", \"Становится совсем темно, как глубокой ночью, усиливается ветер, обдавая меня брызнами и пеной. Меня трясёт от холода.\" }\nstd(\"lake_rnd\").swim = 3\nstd(\"lake_rnd\").__from = std \"lake5\"\nstd(\"rnd2#0\").__disabled = true\nstd(\"moon1\").__nr_act = 1\nstd(\"putty\").__nr_tak = 1\nstd(\"putty\").__nr_inv = 1\nstd(\"system.dlg\").oldDsc = false\nstd(\"system.dlg\").dyndisp = \"Жилой модуль В1\"\nstd(\"system.dlg\").param_disp = \"Жилой модуль B1\"\nstd(\"system.dlg\").param_dlg = \"vera\"\nstd(\"system.dlg\").img = false\nstd(\"system.dlg\").__from = std \"pause2\"\nstd(\"system.dlg\").param_pic = \"station/cabin4\"\nstd(\"system.dlg\").owner = \"pause2\"\nstd(\"system.dlg\").reaction = false\nstd(\"system.dlg\").param_key = \"vera.head\"\nstd(\"system.dlg\").npc = { \"vera\" }\nstd(\"system.dlg\").__visits = 3\nstd(\"system.dlg\").seen = { [\"minaeva.head30\"] = true, [\"minaeva.head16\"] = true, [\"minaeva.head6\"] = true, [\"minaeva.head34\"] = true, [\"minaeva.head10\"] = true, [\"minaeva.head28\"] = true, [\"lysanov.head10\"] = true, [\"vera.head2\"] = true, [\"minaeva.head2\"] = true, [\"vera.head4\"] = true, [\"minaeva.head40\"] = true, [\"minaeva.head14\"] = true, [\"minaeva.head8\"] = true, [\"minaeva.head26\"] = true, [\"minaeva.head32\"] = true, [\"lysanov.head6\"] = true, [\"lysanov.head8\"] = true, [\"minaeva.head20\"] = true, [\"minaeva.head18\"] = true, [\"lysanov.head2\"] = true, [\"minaeva.head4\"] = true, [\"minaeva.head42\"] = true, [\"minaeva.head36\"] = true, [\"minaeva.head12\"] = true, [\"lysanov.head4\"] = true, [\"minaeva.head38\"] = true }\nstd(\"system.dlg\").branch = \"head\"\nstd(\"system.dlg\").currentId = \"vera.head3\"\nstd(\"game\").__reaction = nil\nstd(\"game\").__lreaction = nil\nstd(\"game\").player = pl\nstd(\"game\").__pevents = nil\nstd(\"game\").__started = true\nstd(\"game\").__aevents = nil\nstd(\"game\").__lastdisp = \"Модуль большой, как и у Марутяна, только вместо одной широкой кровати -- две, стоящие у противоположных стен. Лампа и правда мерцает, а в воздухе стоит запах пыли -- сразу становится ясно, что здесь давно никто не живёт.^^{switch|Выключатель света} на стене с запавшей кнопкой намекает на то, что выключить мерцающую лампу не получится, даже если мы захотим насладиться темнотой. Глазок магнитного замка на {b1_door|двери} горит красным -- видимо, это означает, что дверь заблокирована снаружи. Обе кровати, разделённые падающей клином тенью, напоминают жёсткие больничные койки. У {bed1|левой кровати} зачем-то содрали матрас.  {bed2|Вторая кровать} не тронута. На кровати лежит {tape_holder|рулон с клейкой лентой} -- жёлтого цвета, с чёрной штриховкой. Рядом поблёскивает бакелитовая трубка {comm|интеркома} -- с неё даже удосужились вытереть пыль. У стены неподалёку от двери валяется массивная пластиковая {dirtybox|коробка}.  {vera1|Вера} сидит у {porthole|иллюминатора} и смотрит на что-то сквозь своё отражение. \"\nstd(\"game\").__in_ini = false\nstd(\"game\").__time = 290\nstd(\"next#3\").__nr_act = 1\nstd(\"destination\").alldsc = { \"Луна услужливо подсвечивает мне путь -- там, где играют её блики, нет ни пены, ни сильных течений.\", \"Мне придётся нырнуть в темноту. Хотя навстречу и идёт сильное течение, это -- единственный выход отсюда.\", \"Кажется, я могу немного приблизиться к берегу. Но надо быть осторожным и не попасть в водоворот.\" }\nstd(\"destination\").__nr_act = 2\nstd(\"robe\").__nr_act = 4\nstd(\"swim1#0\").__disabled = nil\nstd(\"catheter\").__nr_act = 2\nstd(\"catheter\").done = true\nstd(\"swim2#0\").__disabled = nil\nstd(\"goback\").__nr_act = 2\nstd(\"patch\").edge = true\nstd(\"patch\").__nr_used = 2\nstd(\"patch\").done = true\nstd(\"patch\").__nr_act = 1\nstd(\"lake_rnd_hub\").__from = std \"lake_rnd\"\nstd(\"left2\").__nr_act = 2\nstd(\"@iface\").__raw = nil\nstd(\"lake4\").__from = std \"lake3\"\nstd(\"lake4\").__visits = 1\nstd(\"b1\").__visits = 1\nstd(\"b1\").__from = std \"system.dlg\"\nstd(\"b1\").saved = true\nstd(\"lake3\").__from = std \"lake2\"\nstd(\"lake3\").__visits = 1\nstd(\"pause1\").__visits = 1\nstd(\"pause1\").__from = std \"system.dlg\"\nstd(\"pause1\").counter = 50\nstd(\"lake6\").__from = std \"lake5\"\nstd(\"lake6\").__visits = 1\nstd(\"rnd3#0\").__disabled = nil\nstd(\"wakeup1\").__from = std \"wait_wakeup\"\nstd(\"wakeup1\").__visits = 1\nstd(\"panel1\").__nr_act = 2\nstd(\"panel1\").__nr_used = 1\nstd(\"pause2\").__visits = 1\nstd(\"pause2\").__from = std \"system.dlg\"\nstd(\"pause2\").counter = 60\nstd(\"smell1\").__nr_act = 2\nstd(\"replica_2#0\").__nr_act = 2\nstd(\"lake2\").__from = std \"lake1\"\nstd(\"lake2\").__visits = 1\nstd(\"await\").__nr_act = 1\nstd(\"foam\").__nr_act = 1\nstd(\"swim3#0\").__disabled = nil\n" }
+std("player").obj = std.list { "cutter" }:__dirty(true)
 std("player").__need_scene = nil
 std("player").__inv_disabled = nil
 std("player").__moved = nil
-std("player").room = std "med1"
+std("player").room = std "nearlab"
 std("player").__in_afterwalk = false
 std("player").__closed = nil
-std("@timer").__timer = 0
-std("med1").__from = std "intro2"
-std("med1").__visits = 1
-std("intro1").__visits = 1
-std("intro1").__from = std "main"
-std("intro1").counter = 50
+std("main").state = { ["lab.terminal"] = { cursor = 0, fromLocation = false, buffer = {  }, history = { items = {  }, pos = false }, vars = { anim = 1, next = false, ten = false, timer = false }, text = "" }, ["deck.terminal"] = { cursor = 0, fromLocation = false, buffer = {  }, history = { items = {  }, pos = false }, vars = { next = false, timer = false, anim = 1 }, text = "" }, ["sim.terminal"] = { cursor = 0, fromLocation = false, buffer = {  }, history = { items = {  }, pos = false }, vars = { next = false, timer = false, anim = 1 }, text = "" } }
