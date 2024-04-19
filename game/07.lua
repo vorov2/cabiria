@@ -637,7 +637,7 @@ es.room {
     obj = { "marytan3", "planet1" },
     way = {
         path { "В коридор", "interlude1" },
-        path { "В технический отсек", "interlude2" },
+        path { "В инженерный отсек", "interlude2" },
         path { "В лабораторию", "lab1" }
     }
 }
@@ -1053,7 +1053,7 @@ es.room {
     obj = { "simonova2", "planet2", "alexin1" },
     way = {
         path { "В коридор", "interlude1" },
-        path { "В технический отсек", "interlude2" },
+        path { "В инженерный отсек", "interlude2" },
         path { "В лабораторию", "lab1" }
     }
 }
