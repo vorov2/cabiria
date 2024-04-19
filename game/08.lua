@@ -45,7 +45,7 @@ es.room {
     dsc = [[Несмотря на несколько чашек местного кофе, не уступающего по горечи рвотному, меня тянет в сон, как в обморок.
     ^Тусклое освещение в техническом отсеке слепит, и всё вокруг кажется расплывчатым. Я несколько раз моргаю и тру глаза, чтобы просто прочитать сообщения на экране терминала.]],
     next = function(s)
-        es.music("dali")
+        es.music("dali", 2)
         walkin("tech")
         return true
     end
@@ -85,7 +85,7 @@ es.obj {
 es.obj {
     nam = "alexin",
     done = false,
-    dsc = "{Алексин} -- мой новый коллега-инженер -- сидит у основного терминала и со скучающим видом листает какие-то",
+    dsc = "{Алексин} -- мой новый коллега-инженер -- сидит у основного терминала и со скучающим видом листает",
     act = function(s)
         if s.done then
             return "Здесь я свою работу закончил. Не стоит его больше беспокоить. Лучше сходить к Марутяну."
@@ -219,12 +219,17 @@ es.terminal {
             }
         elseif not tonumber(mod) then
             return false,
-                es.error("Некорректный формат модуля операционного модуля: "..mod)
+                s:error("Некорректный формат модуля операционного модуля: "..mod)
         else
             mod = tonumber(mod)
+            if mod < 1 or mod > 10 then
+                return false, s:error(string.format("Неизвестный номер модуля: %s.", mod))
+            elseif mod < 4 or mod > 8 then
+                return false, s:error("Модуль не введён в сервисный режим для проверки.")
+            end
             local mk = _("module"..tostring(mod - 3))
-            if mod < 4 or mod > 8 or not mk.active then
-                return false, es.error("Модуль не введён в сервисный режим для проверки.")
+            if not mk.active then
+                return false, s:error("Модуль не введён в сервисный режим для проверки.")
             end
             return true, mk
         end
@@ -480,6 +485,7 @@ es.terminal {
                 end
                 table.insert(tab, "Модуль 0"..tostring(i + 3)..": "..txt)
             end
+            table.insert(tab, "Модуль 09: диагностика прошла успешно")
             table.insert(tab, "Модуль 10: модуль не найден")
             return tab
         end

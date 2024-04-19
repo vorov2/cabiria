@@ -1450,9 +1450,9 @@ es.terminal {
                 }
             end
             if not args[2] then
-                return es.error("Не указан идентификатор команды.")
+                return s:error("Не указан идентификатор команды.")
             end
-            return es.error(
+            return s:error(
                 string.format("Некорректный идентификатор команды: \"%s\".", args[2]))
         end,
         status = function(s, args, load)

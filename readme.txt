@@ -67,6 +67,14 @@ typeoo, air_hiss_tubes_loop.wav
 https://freesound.org/people/typeoo/sounds/521501/
 Creative Commons 0
 
+Joao_Janz, Alarm2_1
+https://freesound.org/people/Joao_Janz/sounds/478280/
+Creative Commons 0
+
+giddster, Water, pouring into glass
+https://freesound.org/people/giddster/sounds/386439/
+Creative Commons 0
+
 *Installation*
 
 "Abyss of light" is a cross platform game and is able to run on Windows, Linux and Mac OS.
