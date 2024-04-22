@@ -1454,7 +1454,7 @@ es.room {
     nam = "death_intro1",
     pause = 40,
     enter = function(s)
-        es.stopMusic(300)
+        es.stopMusic(3000)
     end,
     next = "death1"
 }

@@ -131,7 +131,7 @@ es.room {
             es.music("overcome")
         elseif s.need_mus then
             s.need_mus = false
-            es.music("whatif", 2)
+            es.music("whatif", 2, 0, 3000)
         end
     end,
     obj = {
@@ -1007,7 +1007,7 @@ es.room {
     enter = function(s)
         if not s.mus then
             s.mus = true
-            es.music("bass")
+            es.music("bass", 1, 0, 3000)
         end
     end,
     obj = { "pair" },

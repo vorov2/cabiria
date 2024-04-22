@@ -1395,7 +1395,7 @@ es.room {
     pic = "station/corridor_red1",
     disp = "Коридор",
     enter = function(s)
-        es.music("doom", 2)
+        es.music("doom", 2, 0, 3000)
     end,
     dsc = [[Мы вылетели из модуля.
     ^Сирена уже сходила на нет, превратилась в растянутый низкий вой, который заглушали толстые стены, но лампы всё ещё отливали красным.]],
@@ -1493,7 +1493,7 @@ es.obj {
         if s.wake then
             return "Я думаю, лучше оставить его в покое. Наверняка у него сотрясение мозга. Пока мы ему ничем не можем помочь."
         else
-            es.music("doom", 2)
+            es.music("doom", 2, 0, 3000)
             s.wake = true
             es.walkdlg("andreev.wake")
             return true

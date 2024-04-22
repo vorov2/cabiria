@@ -800,7 +800,7 @@ es.terminal {
     before_exit = function(s)
         if all.tech.done and not s.vars.mus then
             s.vars.mus = true
-            es.music("juxtaposition")
+            es.music("juxtaposition", 1, 0, 3000)
         end
         return false
     end
@@ -1002,7 +1002,7 @@ es.obj {
         if w.nam == "key" and not s.unbar and not s.lost then
             s.lost = true
             purge("key")
-            es.music("dali", 2)
+            es.music("dali", 2, 0, 3000)
             return "Делать что-нибудь в скафандре до одури неудобно! Пальцы одеревенели, как при обморожении. Сервисный ключ выскальзывает из рук, когда я пытаюсь открыть заслонку, и со звоном проваливается в гулкую кишку шлюза."
         elseif w.nam == "key" and not s.unbar then
             s.unbar = true
@@ -1032,8 +1032,8 @@ es.obj {
 es.obj {
     nam = "blockers",
     cnd = "{blocker_holder}.unbar",
-    dsc = "Внутри -- {три} жилки блокироваторов, которые выглядят, как силовые кабели, и ничем друг от друга не отличаются.",
-    act = "Я знаю, что у блокироваторов разная прочность, но никаких отличительных пометок не вижу, здесь слишком темно.",
+    dsc = "Внутри -- {три} жилки блокираторов, которые выглядят, как силовые кабели, и ничем друг от друга не отличаются.",
+    act = "Я знаю, что у блокираторов разная прочность, но никаких отличительных пометок не вижу, здесь слишком темно.",
     used = function(s, w)
         if w.nam == "flash" then
             return "Да, фонарик может помочь."

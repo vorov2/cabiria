@@ -373,7 +373,7 @@ es.room {
             es.music("anticipation")
         elseif s.mus == 1 and not snd.music_playing() then
             s.mus = 2
-            es.music("fatigue2")
+            es.music("fatigue2", 1, 0, 3000)
         elseif s.mus == 2 and all.counter.done then
             s.mus = 3
             es.music("hope", 1, 0, 3000)

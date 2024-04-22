@@ -358,7 +358,7 @@ es.obj {
     position = 0,
     cnd = "{belt2}.done and not s.done",
     dsc = function(s)
-        return string.format([[В левый подлокотник ложемента вмонтирован {рычажок}, который переключается по четырём позициям.
+        return string.format([[В левый подлокотник ложемента вмонтирован {рычаг}, который переключается по четырём позициям.
         ^Сейчас рычаг в позиции "%s".]], tostring(s.position))
     end,
     act = function(s)
@@ -367,7 +367,7 @@ es.obj {
             return "Я сбрасываю рычаг в нулевую позицию."
         else
             s.position = s.position + 1
-            return string.format("Я перевожу рычаг на позицию \"%s\".", tostring(s.position))
+            return string.format("Я перевожу левый рычаг на позицию \"%s\".", tostring(s.position))
         end
     end
 }
@@ -510,7 +510,7 @@ es.room {
     nam = "deck4",
     pic = "ship/deck",
     disp = "Рубка",
-    dsc = [[Все молча сидят в ложементах, словно, как и я, сомневаются в том, что вернулись в реальный мир, но решаются высказать это вслух.]],
+    dsc = [[Все молча сидят в ложементах, словно, как и я, сомневаются в том, что вернулись в реальный мир, но не решаются высказать это вслух.]],
     onenter = function(s)
         if all.corridor.mus then
             es.walkdlg {
@@ -611,7 +611,7 @@ es.room {
     enter = function(s)
         if not s.mus then
             s.mus = true
-            es.music("lotus", 2)
+            es.music("lotus", 2, 0, 3000)
         end
     end,
     onexit = function(s, t)
@@ -800,8 +800,7 @@ es.room {
             es.stopMusic(2000)
             all.gravs.done = true
             all.gravs.wait = 0
-            p [[Гравитация обрушивается на меня штормовой волной. Я падаю на колени, не отпуская леер, словно от него зависит моя жизнь.
-            ^Требуется время, чтобы свыкнуться с вновь обретённой силой тяжести. Несмотря на то, что искусственной гравитации на "Грозном" далеко до земной, мышцы ноют от боли, требуя пощады.]]
+            walkin("gravity_on")
             return true
         else
             return false
@@ -1037,8 +1036,7 @@ es.obj {
         elseif w.nam == "key" and s.wait == 1 then
             s.wait = 2
             timer:set(1000)
-            es.stopMusic()
-            es.loopMusic("descend")
+            es.music("descend", 10, 0, 2000)
             return "Я резко крутанул ключ и вцепился в леер на стене. Всё, теперь надо просто ждать."
         elseif w.nam == "key" and s.wait > 1 then
             return "Надо ждать, пока не заработают гравитационные катушки."
@@ -1073,6 +1071,21 @@ es.obj {
 }
 -- endregion
 
+-- region gravity_on
+es.room {
+    nam = "gravity_on",
+    noinv = true,
+    pic = "ship/tech",
+    disp = "Технический отсек",
+    dsc = [[Гравитация обрушивается на меня штормовой волной. Я падаю на колени, не отпуская леер, словно от него зависит моя жизнь.
+    ^Требуется время, чтобы свыкнуться с вновь обретённой силой тяжести. Несмотря на то, что искусственной гравитации на "Грозном" далеко до земной, мышцы ноют от боли, требуя пощады.]],
+    enter = function(s)
+        es.sound("soundinspace")
+    end,
+    next = "tech"
+}
+-- endregion
+
 -- region interlude3
 es.room {
     nam = "interlude3",
@@ -1080,8 +1093,7 @@ es.room {
     noinv = true,
     disp = "Навигационный отсек",
     enter = function(s)
-        es.stopMusic()
-        es.music("horn")
+        es.music("horn", 1, 0, 1000)
     end,
     dsc = [[Я забегаю в отсек навигатора. Вслед за мной тут же влетают Григорьев и Кофман. Кофман грубо отодвигает меня плечом и подскакивает к Мерцель, которая колдует у анализатора.]],
     next = function(s)

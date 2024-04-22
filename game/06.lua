@@ -14,7 +14,7 @@ es.room {
     pic = "common/station",
     seconds = 42,
     enter = function(s)
-        es.music("violin", 1, 0)
+        es.music("violin")
         timer:set(1000)
     end,
     timer = function(s)
