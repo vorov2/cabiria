@@ -633,7 +633,7 @@ es.room {
             es.walkdlg {
                 dlg = "vera",
                 branch = "madness",
-                pic = "station/cabin4",
+                pic = "station/cabine",
                 disp = "Жилой модуль B1"
             }
         end

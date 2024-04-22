@@ -1,4 +1,5 @@
 local std = stead
+std("select_chapter#0").__nr_act = 2
 std("@instead").__sound = nil
 std("@instead").__music_loop = 1024
 std("@instead").__music_fadeout = -1
@@ -17,15 +18,18 @@ std("game").__started = true
 std("game").__pevents = nil
 std("game").__reaction = nil
 std("game").__aevents = nil
-std("game").__lastdisp = "^^^^^<x:44%,center>{#new_game|<b>Новая игра</b>} • {#select_chapter|<b>Главы</b>} • {#tutorial|<b>Обучение</b>} • {#credits|<b>Создатели</b>}^^^^^^^^^^^^^^^^^^^^^^^{#version|<b>Версия:  0.4</b>}"
+std("game").__lastdisp = "^^^^^<x:44%,center>{#new_game|<b>Новая игра</b>} • {#select_chapter|<b>Главы</b>} • {#tutorial|<b>Обучение</b>} • {#credits|<b>Создатели</b>}^^^^^^^^^^^^^^^^^^^^^^^{#version|<b>Версия:  0.5</b>}"
 std("game").__lreaction = nil
-std("game").__time = 1
+std("game").__time = 5
 std("@theme").vars = { ["scr.gfx.bg"] = "theme/menu.jpg", ["win.col.fg"] = "gray", ["win.fnt.size"] = "20", ["win.col.link"] = "gray", ["win.col.alink"] = "white" }
 std("@theme").reset_vars = { ["scr.gfx.bg"] = "theme/bg.jpg", ["win.col.fg"] = "#d3d3d3", ["win.fnt.size"] = "18", ["win.col.link"] = "#649bc1", ["win.col.alink"] = "#0094ff" }
 std("player").__moved = nil
 std("player").room = std "menu"
 std("player").__need_scene = nil
 std("player").__in_afterwalk = false
+std("back").__nr_act = 2
 std("main").__from = std "main"
-std("menu").__from = std "main"
-std("menu").__visits = 1
+std("chapters").__from = std "menu"
+std("chapters").__visits = 2
+std("menu").__from = std "chapters"
+std("menu").__visits = 3
