@@ -1,6 +1,10 @@
 --Extensions to instead
 function es.setTheme(bg)
     bg = bg or "bg"
+    theme.set("win.x", 45)
+    theme.set("win.y", 20)
+    theme.set("win.w", 830)
+    theme.set("win.h", 860)
     if es.bg ~= bg then
         es.bg = bg
         if bg == "menu" then
@@ -13,6 +17,8 @@ function es.setTheme(bg)
             theme.set("win.col.fg", "gray")
             theme.set("win.col.link", "#C0C0C0")
             theme.set("win.col.alink", "white")
+            theme.set("win.y", 110)
+            theme.set("win.h", 740)
         else
             theme.set("win.fnt.size", 18)
             theme.set("win.col.fg", "lightgray")

@@ -7,7 +7,6 @@ dofile "lib/es.lua"
 room {
     nam = "main",
     enter = function(s)
-        --gamefile("game/05.lua", true)
         walkin("menu")
     end
 }
@@ -86,7 +85,7 @@ es.room {
 es.room {
     nam = "credits",
     bg = "credits",
-    dsc = [[^^^
+    dsc = [[
         <b>Платформа INSTEAD:</b> Пётр Косых^
         <b>Сюжет и программирование:</b> Василий Воронков^
         <b>Тестирование:</b> Олег Бош, Пётр Косых^
@@ -123,7 +122,7 @@ local debugMode = false
 es.room {
     nam = "chapters",
     bg = "chapters",
-    dsc = [[^^^
+    dsc = [[
     Выберите главу из списка для загрузки. Доступны только открытые в процессе прохождения главы.]],
     obj = {
         "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16",
@@ -245,7 +244,7 @@ es.room {
             table.insert(lines, line)
         end
         io.close(file)
-        return "^^^"..table.concat(lines, "^")
+        return table.concat(lines, "^")
     end,
     obj = { "back" }
 }
