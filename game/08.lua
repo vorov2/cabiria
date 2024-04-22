@@ -18,7 +18,6 @@ es.room {
         timer:set(1000)
     end,
     timer = function(s)
-        print(s.seconds)
         s.seconds = s.seconds + 1
         if s.seconds == 50 then
             timer:stop()
