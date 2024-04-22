@@ -537,8 +537,7 @@ function es.terminal(tab)
             if s:locked() then
                 s.terminal:writeLine("Уровень доступа: ограниченный")
             else
-                s.terminal:writeLine(
-                    "Уровень доступа: стандартный пользователь")
+                s.terminal:writeLine("Уровень доступа: стандартный пользователь")
             end
         elseif head == "netaddr" then
             s:outputPrefix(cmd)
