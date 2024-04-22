@@ -834,7 +834,7 @@ es.room {
     enter = function(s)
         if not s.mus then
             s.mus = true
-            es.music("lotus", 2)
+            es.music("lotus", 2, 0, 3000)
         end
     end,
     onexit = function(s, t)
