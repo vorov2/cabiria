@@ -467,7 +467,7 @@ es.room {
     noinv = true,
     pause = 80,
     enter = function(s)
-        es.stopMusic()
+        es.stopMusic(3000)
     end,
     next = "interlude1"
 }

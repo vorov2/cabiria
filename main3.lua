@@ -118,6 +118,8 @@ es.obj {
 -- endregion
 
 -- region chapters
+local debugMode = false
+
 es.room {
     nam = "chapters",
     bg = "chapters",
@@ -144,7 +146,7 @@ es.room {
 
 local chapter_template = {
     dsc = function(s)
-        if (prefs.chapters and prefs.chapters[s.nam]) or s.nam == "1" then
+        if (prefs.chapters and prefs.chapters[s.nam]) or s.nam == "1" or debugMode then
             return string.format("{Глава %s. \"%s\"}", s.nam, s.title) .. "^" .. fmt.nb("")
         else
             return "Глава " .. s.nam .. "^" .. fmt.nb("")

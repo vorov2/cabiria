@@ -237,7 +237,12 @@ es.obj {
             return "Надо бы и правда взять себе что-нибудь поесть."
         else
             purge("tray")
-            es.walkdlg("marytan.diner1")
+            es.walkdlg {
+                dlg = "marytan",
+                branch = "diner1",
+                pic = "station/diner",
+                disp = "Столовая"
+            }
             return true
         end
     end,

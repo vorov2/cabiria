@@ -223,6 +223,7 @@ function es.main(tab)
         param_pic = false,
         owner = false,
         reset = function(s)
+            s.dyndisp = false
             s.branch = false
             s.param_dlg = false
             s.param_disp = false
@@ -244,6 +245,7 @@ function es.main(tab)
             return prefix .. "/" .. s.param_dlg
         end,
         disp = function(s)
+            print("disp", s.param_disp)
             if s.param_disp then
                 return es.apply(s.param_disp, s)
             else
