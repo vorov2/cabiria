@@ -729,8 +729,6 @@ es.obj {
     end,
     act = function(s)
         local ch,c = all.checker,all.counter
-        print("checker", ch.num)
-        print("counter", c.num)
         if ch.num == 0 then
             p "Рано пока опускать рычаг, я же ещё не ввёл никаких данных."
         elseif c.num ~= ch.num then

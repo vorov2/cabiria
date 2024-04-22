@@ -485,7 +485,6 @@ es.obj {
     net = false,
     orb = false,
     disp = function(s)
-        print("paddle.disp")
         if s.orb then
             return (es.tool "Весло со сферой")
         elseif s.net then

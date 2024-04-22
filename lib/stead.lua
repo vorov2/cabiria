@@ -245,7 +245,6 @@ function es.main(tab)
             return prefix .. "/" .. s.param_dlg
         end,
         disp = function(s)
-            print("disp", s.param_disp)
             if s.param_disp then
                 return es.apply(s.param_disp, s)
             else
