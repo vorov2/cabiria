@@ -9,6 +9,11 @@ Music: Vasily Voronkov
 *The game uses image by NACreative on Freepik:*
 https://www.freepik.com/
 
+*The game uses the following font for terminal emulator*
+Flexi IBM VGA True (437)
+Creative Commons Attribution-ShareAlike 4.0
+http://creativecommons.org/licenses/by-sa/4.0/
+
 *The game uses the followin sound effects from freesound.org:*
 
 gabemille74, BreathOfDeath (death.ogg)
