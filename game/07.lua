@@ -1720,7 +1720,7 @@ es.room {
     nam = "outro1",
     noinv = true,
     pause = 50,
-    enter = function(s)
+    next = function(s)
         gamefile("game/08", true)
     end
 }
