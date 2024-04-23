@@ -93,10 +93,12 @@ local function processKey(key, text, cursor, history)
             cursor = string.len(text)
         end
     elseif ukey == "RETURN" then
-        local cmd = string.lower(text)
-        here():commandProcessor(cmd)
-        table.insert(history.items, cmd)
-        history.pos = #history.items + 1
+        if string.trim(text) ~= "" then
+            local cmd = string.lower(text)
+            here():commandProcessor(cmd)
+            table.insert(history.items, cmd)
+            history.pos = #history.items + 1
+        end
         text = ""
         cursor = 0
     end
