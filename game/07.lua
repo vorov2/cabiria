@@ -391,6 +391,7 @@ es.obj {
 
 es.obj {
     nam = "coffee",
+    bev = true,
     drink = 0,
     cnd = "{vending}.drink == 'coffee' and s.drink < 5",
     disp = es.tool "Стаканчик кофе",
@@ -410,6 +411,7 @@ es.obj {
 
 es.obj {
     nam = "tea",
+    bev = true,
     drink = 0,
     cnd = "{vending}.drink == 'tea' and s.drink < 5",
     disp = es.tool "Стаканчик чая",
@@ -429,6 +431,7 @@ es.obj {
 
 es.obj {
     nam = "compote",
+    bev = true,
     drink = 0,
     cnd = "{vending}.drink == 'compote' and s.drink < 5",
     disp = es.tool "Стаканчик компота",
@@ -475,6 +478,10 @@ es.obj {
     act = function(s)
         if not s.taken and (not have("breakfast") or not all.vending.drink) then
             return "Я бы взял сначала завтрак и напиток, а потом уже положил всё на поднос."
+        elseif not s.taken and have("breakfast") and not all.vending.drink then
+            return "Надо ещё выбрать напиток."
+        elseif not s.taken and not have("breakfast") and all.vending.drink then
+            return "Одного напитка для завтрака будет мало."
         elseif not s.taken then
             s.taken = true
             all.tray.taken = true
@@ -491,6 +498,14 @@ es.obj {
     used = function(s, w)
         if w.nam == "tray" then
             return "Зачем мне ставить сюда поднос с едой?"
+        elseif w.nam == "breakfast" and not all.vending.drink then
+            return "Надо ещё выбрать напиток."
+        elseif w.nam == "breakfast" and all.vending.drink then
+            return s:act()
+        elseif w.bev and not have("breakfast") then
+            return "Одного напитка для завтрака будет мало."
+        elseif w.bev and have("breakfast") then
+            return s:act()
         end
     end
 }
@@ -1160,7 +1175,7 @@ es.obj {
 
 es.obj {
     nam = "shadow",
-    dsc = "Впрочем, неподалёку от своего отсека я замечаю {Веру}, которая смотрит в узкий иллюминатор на темноту, обняв себя за плечи.",
+    dsc = "Впрочем, неподалёку от своего отсека я замечаю {Веру}, которая смотрит в узкий иллюминатор на темноту.",
     act = "Она так погружена в себя, что даже меня не замечает."
 }
 -- endregion

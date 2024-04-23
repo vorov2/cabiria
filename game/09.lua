@@ -1130,13 +1130,13 @@ es.obj {
         elseif w.nam == "pills" then
             purge("pills")
             s.pills = true
-                es.walkdlg {
-                    dlg = "mercel",
-                    branch = "pills",
-                    disp = "Жилой блок С3",
-                    pic = "station/cabin4",
-                    owner = "mercel2"
-                }
+            es.walkdlg {
+                dlg = "mercel",
+                branch = "pills",
+                disp = "Жилой блок С3",
+                pic = "station/cabin4",
+                owner = "mercel2"
+            }
             return true
         elseif w.nam == "cup" then
             if not s.pills and w.hot == 0 and w.cold == 0 then
@@ -1156,7 +1156,10 @@ es.obj {
                     owner = "mercel2"
                 }
                 return true
-            elseif w.cold == 0 and w.hot == 0 then
+            elseif (w.cold + w.hot > 0 and w.cold + w.hot < 6) then
+                es.walkdlg("mercel.lowcup")
+                return true
+            elseif w.cold + w.hot == 0 then
                 s:point()
                 es.walkdlg("mercel.emptycup")
                 return true
@@ -1186,6 +1189,9 @@ es.obj {
         end
     end,
     act = function(s)
+        if not all.mercel2.pills then
+            return "Зачем мне рыться в шкафчике Мерцель?"
+        end
         if s.locked then
             s.locked = false
             return "Я открываю дверцы шкафчика."

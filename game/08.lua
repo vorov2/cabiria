@@ -349,22 +349,23 @@ es.terminal {
             if not load then
                 return "$load"
             end
-            if fl == "dump-01312.dat" then
+            local nm = tonumber(fl)
+            if fl == "dump-01312.dat" or nm == 1 then
                 return es.generateLog(10334, 21)
-            elseif fl == "dump-02476.dat" then
+            elseif fl == "dump-02476.dat" or nm == 2  then
                 return es.generateLog(22431, 26)
-            elseif fl == "message-3471-11-23.txt" then
+            elseif fl == "message-3471-11-23.txt" or nm == 3 then
                 return {
                     "",
                     "Сергей, я всё понимаю, но сделать сейчас мы ничего не можем. Замену",
-                    "для десятого модуля опять не привели. Официальный запрос, конечно же,",
+                    "для десятого модуля опять не привезли. Официальный запрос, конечно же,",
                     "направлялся. Если в следующий раз не привезут, давай оформим жалобу.",
                     "Номер запроса: 013-456.",
                     "",
                     "С уважением,",
                     "Арто Марутян"
                 }
-            elseif fl == "message-3487-16-24.txt" then
+            elseif fl == "message-3487-16-24.txt" or nm == 4 then
                 return {
                     "",
                     "Сергей Алексеевич, ну в самом деле! Я не могу подобное одобрить!",
@@ -378,7 +379,7 @@ es.terminal {
                     "С уважением,",
                     "Арто Марутян"
                 }
-            elseif fl == "message-3489-14-05.txt" then
+            elseif fl == "message-3489-14-05.txt" or nm == 5 then
                 return {
                     "",
                     "Сергей, повторяться я не буду. Модуль работает, проходит все тесты.",
@@ -390,7 +391,7 @@ es.terminal {
                     "С уважением,",
                     "Арто Марутян"
                 }
-            elseif fl == "message-3493-17-03.txt" then
+            elseif fl == "message-3493-17-03.txt" or nm == 6 then
                 return {
                     "",
                     "Я не понимаю, теперь уже два модуля плохо работают? Что вы там с ними",
@@ -399,7 +400,7 @@ es.terminal {
                     "С уважением,",
                     "Арто Марутян"
                 }
-            elseif fl == "memo.txt" then
+            elseif fl == "memo.txt" or nm == 7 then
                 return {
                     "",
                     "Чтобы не забыть! На пятый модуль подаётся избыточное напряжение,",

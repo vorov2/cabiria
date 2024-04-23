@@ -659,7 +659,8 @@ es.obj {
         if w.kind == "tube" then
             _(w.nam.."_holder").taken = false
             purge(w.nam)
-            return string.format("Я возвращаю пробирку \"%s\" в штатив.", w.dsc)
+            local dsc = es.apply(w.dsc, w)
+            return string.format("Я возвращаю пробирку \"%s\" в штатив.", dsc)
         end
     end
 }

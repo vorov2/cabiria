@@ -1,12 +1,11 @@
 "Abyss of light", an interactive novella for INSTEAD (https://instead.hugeping.ru/)
-Discussion board: http://instead.syscall.ru/forum/viewtopic.php?id=1372
 FOR INSTALL NOTES PLEASE SCROLL TO THE BOTTOM OF THE DOCUMENT
 
-INSTEAD and Metaparser: Peter Kosyh
+INSTEAD: Peter Kosyh
 Original idea, literary text and programming: Vasily Voronkov
 Music: Vasily Voronkov
 
-*The game uses image by NACreative on Freepik:*
+*The game uses images by NACreative on Freepik:*
 https://www.freepik.com/
 
 *The game uses the following font for terminal emulator*
