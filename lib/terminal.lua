@@ -132,7 +132,7 @@ function initializeProcessor()
             local prompt = ">"
             local cursor = s.cache.cursor
             if not cursor then
-                cursor = es.sprite(config.fw, config.fh, config.fg, 60)
+                cursor = es.sprite(config.fw, config.fh, config.fg, 120)
                 s.cache.cursor = cursor
             end
             local app = config.fw * #prompt
