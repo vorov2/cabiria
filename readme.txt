@@ -14,7 +14,7 @@ Flexi IBM VGA True (437)
 Creative Commons Attribution-ShareAlike 4.0
 http://creativecommons.org/licenses/by-sa/4.0/
 
-*The game uses the followin sound effects from freesound.org:*
+*The game uses the following sound effects from freesound.org:*
 
 gabemille74, BreathOfDeath (death.ogg)
 https://freesound.org/people/gabemiller74/sounds/60571/
