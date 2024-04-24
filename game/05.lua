@@ -754,9 +754,11 @@ es.obj {
         end
     end,
     used = function(s, w)
-        if w.nam == "paddle" and s.examed then
+        if w.nam == "paddle" and s.examed and w.orb then
             walkin("death_intro3")
             return true
+        elseif w.nam == "paddle" and s.examed and not w.orb then
+            return "Весло тут не поможет."
         elseif w.nam == "paddle" and not s.examed then
             s.examed = true
             return [[Я аккуратно поднимаю весло над водой -- так, чтобы не вывалилась сфера, -- приглядываюсь и вижу, как тонкие чёрные ленты вылезают из омута, сплетаясь в плотную стену, которая не даёт плыть дальше.
