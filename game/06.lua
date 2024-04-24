@@ -528,7 +528,7 @@ es.room {
 es.room {
     nam = "interlude1",
     pic = "station/neardock3",
-    disp = "Коридор у пирса",
+    disp = "Коридор у пристани",
     onenter = function(s)
         es.music("fatigue2")
     end,
@@ -538,7 +538,7 @@ es.room {
 
 es.obj {
     nam = "figure",
-    dsc = "Я бреду по сумрачному коридору у пирса, как вдруг замечаю вдалеке {знакомую фигуру}.",
+    dsc = "Я бреду по сумрачному коридору у пристани, как вдруг замечаю вдалеке {знакомую фигуру}.",
     act = function(s)
         walkin("neardock")
         return true
@@ -550,7 +550,7 @@ es.obj {
 es.room {
     nam = "neardock",
     pic = "station/neardock3",
-    disp = "Коридор у пирса",
+    disp = "Коридор у пристани",
     dsc = [[Света здесь так мало, что можно всерьёз решить, что врубать лампы в полную силу запрещается по правилам станции.]],
     obj = { "dreams", "vera" }
 }

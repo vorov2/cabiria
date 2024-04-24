@@ -2046,7 +2046,7 @@ es.room {
     nam = "dock",
     mus = false,
     pic = "station/dark_corridor1",
-    disp = "Пирс",
+    disp = "Пристань",
     dsc = [[Мы поднялись. Я сам не могу в это поверить, но мы -- поднялись. Остался лишь один маленький шаг.]],
     preact = function(s)
         if not s.mus and not snd.music_playing() then
@@ -2084,7 +2084,7 @@ es.room {
     nam = "interlude4",
     noinv = true,
     pic = "ship/gate",
-    disp = "Пирс",
+    disp = "Пристань",
     dsc = [[Я просовываю в вентиль сервисный ключ, наваливаюсь на него всем телом, и вентиль сдвигается.
     ^Люк открывается.
     ^Мы с Верой залазим в шлюз.]],
