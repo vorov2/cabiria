@@ -1393,12 +1393,51 @@ es.room {
 }
 -- endregion
 
--- region outro1
--- endregion
-
 -- region splash
 es.room {
+    nam = "splash_selector",
+    enter = function(s)
+        walkin("splash1")
+    end
+}
+
+es.room {
     nam = "splash1",
+    {
+        title_dup = false,
+        title = false,
+        light = false
+    },
+    bg = "black",
+    disp = "",
+    shift = 0,
+    enter = function(s)
+        es.music("vision")
+        timer:set(50)
+    end,
+    timer = function(s)
+        s.shift = s.shift + 8 
+        if s.shift > 1170 then 
+            s.shift = 0 
+            timer:stop() 
+            walkin("outro1") 
+            return false 
+        end 
+        if not s.title then 
+            s.title = sprite.new("theme/title.png") 
+            s.light = sprite.new("theme/light.png") 
+            s.title_dup = s.title:dup()
+        end 
+        s.title:copy(s.title_dup)
+        local spr = s.light:draw(s.title_dup, s.shift, 0) 
+        sprite.scr():fill("black")
+        spr:draw(sprite.scr()) 
+        return true 
+    end
+}
+
+es.room {
+    nam = "splash2",
     noinv = true,
     pause = 70,
     bg = "common/splash",
