@@ -1395,13 +1395,6 @@ es.room {
 
 -- region splash
 es.room {
-    nam = "splash_selector",
-    enter = function(s)
-        walkin("splash1")
-    end
-}
-
-es.room {
     nam = "splash1",
     {
         title_dup = false,
@@ -1417,7 +1410,7 @@ es.room {
     end,
     timer = function(s)
         s.shift = s.shift + 8 
-        if s.shift > 1170 then 
+        if s.shift > 1200 then 
             s.shift = 0 
             timer:stop() 
             walkin("outro1") 
