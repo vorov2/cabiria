@@ -1401,6 +1401,7 @@ es.room {
         title = false,
         light = false
     },
+    noinv = true,
     bg = "black",
     disp = "",
     shift = 0,
