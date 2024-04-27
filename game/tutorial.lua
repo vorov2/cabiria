@@ -117,6 +117,14 @@ es.obj {
         else
             return "Вы берёте со стола шкатулку."
         end
+    end,
+    used = function(s, w)
+        if w.nam == "key" then
+            walkin("outro1")
+            return true
+        elseif w.nam == "card" then
+            return "Боюсь, открыть шкатулку картой не получится."
+        end
     end
 }
 
