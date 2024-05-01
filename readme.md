@@ -3,10 +3,8 @@
 
 ## Создатели
 
-INSTEAD: Пётр Косых
-
-Оригинальная идея, текст и программирование: Василий Воронков
-
+INSTEAD: Пётр Косых\
+Оригинальная идея, текст и программирование: Василий Воронков\
 Музыка: Василий Воронков
 
 ## Лицензии
@@ -24,11 +22,10 @@ https://www.freepik.com/
 
 ### Игра использует следующий шрифт для эмуляции терминала:
 Flexi IBM VGA True (437)
-
-Creative Commons Attribution-ShareAlike 4.0
+Лицензия: Creative Commons Attribution-ShareAlike 4.0
 http://creativecommons.org/licenses/by-sa/4.0/
 
-*Игра использует следующие звуковые эффекты с сайта freesound.org:*
+### Игра использует следующие звуковые эффекты с сайта freesound.org:
 
 gabemille74, BreathOfDeath (death.ogg)
 https://freesound.org/people/gabemiller74/sounds/60571/
