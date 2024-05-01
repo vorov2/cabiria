@@ -1,19 +1,24 @@
-"Abyss of light", an interactive novella for INSTEAD (https://instead.hugeping.ru/)
-FOR INSTALL NOTES PLEASE SCROLL TO THE BOTTOM OF THE DOCUMENT
+"БЕЗДНА СВЕТА", интерактивная повесть для INSTEAD (https://instead.hugeping.ru/)
 
-INSTEAD: Peter Kosyh
-Original idea, literary text and programming: Vasily Voronkov
-Music: Vasily Voronkov
+INSTEAD: Пётр Косых
+Оригинальная идея, текст и программирование: Василий Воронков
+Музыка: Василий Воронков
 
-*The game uses images by NACreative on Freepik:*
+Код игры, музыка и звуковые эффекты (за исключением перечисленных ниже),
+а также графика доступны по лицензии Creative Commons 0:
+https://creativecommons.org/public-domain/cc0/
+
+Художественные тексты являются интеллектуальной собственностью автора.
+
+*Игра использует изображения NACreative @ Freepik:*
 https://www.freepik.com/
 
-*The game uses the following font for terminal emulator*
+*Игра использует следующий шрифт для эмуляции терминала*
 Flexi IBM VGA True (437)
 Creative Commons Attribution-ShareAlike 4.0
 http://creativecommons.org/licenses/by-sa/4.0/
 
-*The game uses the following sound effects from freesound.org:*
+*Игра использует следующие звуковые эффекты с сайта freesound.org:*
 
 gabemille74, BreathOfDeath (death.ogg)
 https://freesound.org/people/gabemiller74/sounds/60571/
@@ -78,9 +83,3 @@ Creative Commons 0
 giddster, Water, pouring into glass
 https://freesound.org/people/giddster/sounds/386439/
 Creative Commons 0
-
-*Installation*
-
-"Abyss of light" is a cross platform game and is able to run on Windows, Linux and Mac OS.
-The game is available as a cross platform package, please obtain a version of INSTEAD for
-your platform: https://instead.hugeping.ru/
