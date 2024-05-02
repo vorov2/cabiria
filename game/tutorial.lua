@@ -35,7 +35,7 @@ es.room {
     end,
     onexit = function(s, t)
         if t.nam == "chamber2" and not all.door.unlocked then
-            p "Дверь в соседнюю комнату закрыта, возможно нам тут поможет терминал."
+            p "Дверь в соседнюю комнату закрыта, возможно нам тут поможет вычислительный аппарат."
             return false
         end
     end,
