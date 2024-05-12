@@ -194,16 +194,6 @@ local function backReplica()
     }
 end
 
-local function printOut(replica)
-            local hw = here()
-    for k,v in pairs(replica.children) do
-        print(v.id, v.key, hw.seen[v.id])
-        if v.children and #v.children > 0 then
-            printOut(v)
-        end
-    end
-end
-
 local function makeReplica(index)
     return obj {
         nam = "#replica_"..tostring(index),
@@ -214,7 +204,6 @@ local function makeReplica(index)
             if #replica.children >= s.index then
                 local r = replica.children[s.index]
                 local ava = isAvailable(r)
-                printOut(r)
                 if (r.always and ava) or (not hw.seen[r.id] and ava) then
                     if #r.lines == 1 and (r.lines[1] == "next" or r.lines[1] == "...") then
                         return "{• • •}"
