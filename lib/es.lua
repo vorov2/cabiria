@@ -43,7 +43,12 @@ end
 dofile "lib/stead.lua"
 dofile "lib/util.lua"
 dofile "lib/dialog.lua"
-dofile "lib/terminal.lua"
+
+if instead.tiny then
+    dofile "lib/ps_terminal.lua"
+else
+    dofile "lib/terminal.lua"
+end
 
 prefs.chapters = {}
 

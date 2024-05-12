@@ -1,29 +1,64 @@
 local std = stead
-std("@instead").__sound = nil
-std("@instead").__music_loop = 1024
-std("@instead").__music_fadeout = -1
-std("@instead").__need_fading = false
-std("@instead").__music_fadein = -1
-std("@instead").__music = "sfx/spring.ogg"
-std("@instead").__autosave_slot = nil
-std("@instead").__autosave = nil
-std("@instead").__sound_loop = 1
-std("@instead").__sound_channel = -1
-std("@iface").__raw = nil
+std:reset("game/06.lua")
+std 'game':ini()
+std("system.dlg").oldDsc = false
+std("system.dlg").reaction = false
+std("system.dlg").param_disp = "Коридор"
+std("system.dlg").param_dlg = "kofman"
+std("system.dlg").img = false
+std("system.dlg").__from = std "intro1"
+std("system.dlg").__visits = 1
+std("system.dlg").owner = "intro1"
+std("system.dlg").currentId = "kofman.head1"
+std("system.dlg").param_key = "kofman.head"
+std("system.dlg").branch = "head"
+std("system.dlg").npc = { "kofman" }
+std("system.dlg").seen = { ["kofman.head5"] = true }
+std("system.dlg").param_pic = "ship/corridor"
+std("system.dlg").dyndisp = false
 std("game").player = pl
 std("game").__started = true
 std("game").__pevents = nil
-std("game").__reaction = nil
 std("game").__aevents = nil
-std("game").__lastdisp = "^^^^^<x:44%,center>{#new_game|<b>Новая игра</b>} • {#select_chapter|<b>Главы</b>} • {#tutorial|<b>Обучение</b>} • {#credits|<b>Создатели</b>}^^^^^^^^^^^^^^^^^^^^^^^{#version|<b>Версия:  0.12</b>}"
-std("game").__lreaction = nil
-std("game").__time = 1
-std("@theme").vars = { ["win.col.alink"] = "white", ["win.fnt.size"] = "20", ["win.h"] = "860", ["win.x"] = "45", ["win.y"] = "20", ["win.col.link"] = "gray", ["scr.gfx.bg"] = "theme/menu.jpg", ["win.w"] = "830", ["win.col.fg"] = "gray" }
+std("game").__lastdisp = ""
+std("game").__time = 641
+std("key_holder").__nr_act = 1
+std("key_holder").taken = true
+std("comp").__nr_act = 1
+std("@theme").vars = { ["win.col.alink"] = "#0094FF", ["win.fnt.size"] = "18", ["win.h"] = "860", ["win.x"] = "45", ["win.y"] = "20", ["win.col.link"] = "#649BC1", ["scr.gfx.bg"] = "theme/terminal.jpg", ["win.w"] = "830", ["win.col.fg"] = "lightgray" }
 std("@theme").reset_vars = { ["win.col.alink"] = "#0094ff", ["win.fnt.size"] = "18", ["win.h"] = "860", ["win.x"] = "45", ["win.y"] = "20", ["win.col.link"] = "#649bc1", ["scr.gfx.bg"] = "theme/bg.jpg", ["win.w"] = "830", ["win.col.fg"] = "#d3d3d3" }
-std("player").__moved = nil
-std("player").room = std "menu"
+std("main").state = { ["tech.terminal"] = { cursor = 0, fromLocation = "tech", buffer = { "Управляющая оснастка ГКМ Эпсилон", "Версия 12.3.445", "-", "`", "> monitor backup", "Статистика по сервису резервного копирования данных (backup):", "Потребление памяти: 8093KB", "Загрузка вычислительных блоков: 99%", "Загрузка нейронного блока: 0%", "Загрузка навигационного блока: 0%", "Загрузка дисковой подсистемы: 99%" }, history = { items = { "help", "reports", "help", "services", "services start monitor", "monitor", "monitor backup" }, pos = 8 }, vars = { monitor = true, reports = false, calc = -1, next = false, timer = false, anim = 0, backup = true, navdat = -1, seed = 0, logs = false }, text = "" } }
+std("tech").__from = std "corridor"
+std("tech").__visits = 1
+std("key").__nr_take = 1
+std("@iface").__raw = nil
+std("replica_2#0").__nr_act = 1
+std("player").obj = std.list { "key" }:__dirty(true)
+std("player").__in_onexit = false
+std("player").__inv_disabled = true
 std("player").__need_scene = nil
+std("player").__in_exit = false
+std("player").__moved = nil
+std("player").room = std "tech.terminal"
 std("player").__in_afterwalk = false
-std("main").__from = std "main"
-std("menu").__from = std "main"
-std("menu").__visits = 1
+std("player").__closed = true
+std("@timer").__timer = 100
+std("modules").__nr_used = 1
+std("modules").done = true
+std("corridor").__from = std "system.dlg"
+std("corridor").__visits = 1
+std("intro1").__visits = 1
+std("intro1").__from = std "main"
+std("intro1").seconds = 47
+std("@instead").__sound = nil
+std("@instead").__music_loop = 1
+std("@instead").__music_fadeout = 3000
+std("@instead").__need_fading = false
+std("@instead").__restart = nil
+std("@instead").__music_fadein = -1
+std("@instead").__music = "sfx/dali.ogg"
+std("@instead").__autosave_slot = nil
+std("@instead").__autosave = nil
+std("@instead").__menu = nil
+std("@instead").__sound_loop = 1
+std("@instead").__sound_channel = -1

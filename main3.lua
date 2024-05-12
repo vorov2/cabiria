@@ -117,7 +117,7 @@ es.obj {
 -- endregion
 
 -- region chapters
-local debugMode = false
+local debugMode = true
 
 es.room {
     nam = "chapters",
