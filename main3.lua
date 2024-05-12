@@ -43,7 +43,8 @@ es.room {
         return
             "^^^^^"..
             fmt.tab("44%", "center")..ret..
-            "^^^^^^^^^^^^^^^^^^^^^^^{#version|"..fmt.b(version).."}"
+            "^^^^^^^^^^^^^^^^^^^^^^^"..
+            "{#version|"..fmt.b(version).."}"
     end
 }:with {
     es.obj {

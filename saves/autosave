@@ -1,64 +1,35 @@
 local std = stead
-std:reset("game/06.lua")
-std 'game':ini()
-std("system.dlg").oldDsc = false
-std("system.dlg").reaction = false
-std("system.dlg").param_disp = "Коридор"
-std("system.dlg").param_dlg = "kofman"
-std("system.dlg").img = false
-std("system.dlg").__from = std "intro1"
-std("system.dlg").__visits = 1
-std("system.dlg").owner = "intro1"
-std("system.dlg").currentId = "kofman.head1"
-std("system.dlg").param_key = "kofman.head"
-std("system.dlg").branch = "head"
-std("system.dlg").npc = { "kofman" }
-std("system.dlg").seen = { ["kofman.head5"] = true }
-std("system.dlg").param_pic = "ship/corridor"
-std("system.dlg").dyndisp = false
-std("game").player = pl
-std("game").__started = true
-std("game").__pevents = nil
-std("game").__aevents = nil
-std("game").__lastdisp = ""
-std("game").__time = 641
-std("key_holder").__nr_act = 1
-std("key_holder").taken = true
-std("comp").__nr_act = 1
-std("@theme").vars = { ["win.col.alink"] = "#0094FF", ["win.fnt.size"] = "18", ["win.h"] = "860", ["win.x"] = "45", ["win.y"] = "20", ["win.col.link"] = "#649BC1", ["scr.gfx.bg"] = "theme/terminal.jpg", ["win.w"] = "830", ["win.col.fg"] = "lightgray" }
-std("@theme").reset_vars = { ["win.col.alink"] = "#0094ff", ["win.fnt.size"] = "18", ["win.h"] = "860", ["win.x"] = "45", ["win.y"] = "20", ["win.col.link"] = "#649bc1", ["scr.gfx.bg"] = "theme/bg.jpg", ["win.w"] = "830", ["win.col.fg"] = "#d3d3d3" }
-std("main").state = { ["tech.terminal"] = { cursor = 0, fromLocation = "tech", buffer = { "Управляющая оснастка ГКМ Эпсилон", "Версия 12.3.445", "-", "`", "> monitor backup", "Статистика по сервису резервного копирования данных (backup):", "Потребление памяти: 8093KB", "Загрузка вычислительных блоков: 99%", "Загрузка нейронного блока: 0%", "Загрузка навигационного блока: 0%", "Загрузка дисковой подсистемы: 99%" }, history = { items = { "help", "reports", "help", "services", "services start monitor", "monitor", "monitor backup" }, pos = 8 }, vars = { monitor = true, reports = false, calc = -1, next = false, timer = false, anim = 0, backup = true, navdat = -1, seed = 0, logs = false }, text = "" } }
-std("tech").__from = std "corridor"
-std("tech").__visits = 1
-std("key").__nr_take = 1
-std("@iface").__raw = nil
-std("replica_2#0").__nr_act = 1
-std("player").obj = std.list { "key" }:__dirty(true)
-std("player").__in_onexit = false
-std("player").__inv_disabled = true
-std("player").__need_scene = nil
-std("player").__in_exit = false
-std("player").__moved = nil
-std("player").room = std "tech.terminal"
-std("player").__in_afterwalk = false
-std("player").__closed = true
-std("@timer").__timer = 100
-std("modules").__nr_used = 1
-std("modules").done = true
-std("corridor").__from = std "system.dlg"
-std("corridor").__visits = 1
-std("intro1").__visits = 1
-std("intro1").__from = std "main"
-std("intro1").seconds = 47
 std("@instead").__sound = nil
-std("@instead").__music_loop = 1
-std("@instead").__music_fadeout = 3000
+std("@instead").__music_loop = 1024
+std("@instead").__music_fadeout = -1
 std("@instead").__need_fading = false
 std("@instead").__restart = nil
 std("@instead").__music_fadein = -1
-std("@instead").__music = "sfx/dali.ogg"
+std("@instead").__music = "sfx/spring.ogg"
 std("@instead").__autosave_slot = nil
 std("@instead").__autosave = nil
 std("@instead").__menu = nil
-std("@instead").__sound_loop = 1
 std("@instead").__sound_channel = -1
+std("@instead").__sound_loop = 1
+std("@iface").__raw = nil
+std("game").__reaction = nil
+std("game").__lreaction = nil
+std("game").player = pl
+std("game").__pevents = nil
+std("game").__time = 2
+std("game").__aevents = nil
+std("game").__started = true
+std("game").__in_ini = false
+std("game").__lastdisp = "<b>Версия 0.12</b>^* Исправлены опечатки^* Увеличена область срабатывания кнопки для вызова меню в левом углу экрана^* Исправлена ошибка в Главе 11, некорретный ключ необязательного диалога^* Доработана эмуляция терминала, добавлена поддержка для незрячих^^<b>Версия 0.11</b>^* Исправлены опечатки^* Стилистические и смысловые исправления в тексте Обучения и в самой игре^* Исправлена некритичная ошибка в кат-сцене в Главе 5^^<b>Версия 0.10</b>^* Исправлен критический баг в Главе 13^^<b>Версия 0.9</b>^* Исправлены опечатки и стилистические ошибки^* На заставке игры (Глава 3) отображался инвентарь^* Исправлен некритический баг в Обучении^^<b>Версия 0.8</b>^* Исправлены стилистические ошибки и опечатки^* Заменено изображение орбитальной станции^* Исправлена ошибка в первом сне на станции, в Главе 5^* Переработана заставка игры, отображаемая в конце Главы 3^^<b>Версия 0.7</b>^* Исправлены опечатки, сделаны доработки в описаниях объектов и действий^* В \"Информация о версии\" некорректно отображались переводы строк^* В Обучении можно было взаимодействовать с инвентарём на финальном экране^* В Главе 4 команда \"help\" в терминале дважды выводила описание команды \"ver\"^* Заставка Главы 8 показывалась менее секунды^* Улучшено сведение музыки в различных главах^* Квест в Главе 3 с гравитацией теперь заканчивается отдельным экраном^* Изменён спрайт Майорова^* Доработан спрайт Ефимовой^* Добавлена информация об используемом для терминала шрифте в readme.txt^* Терминал больше не добавляет в историю команды, состоящие только из пробелов^* Доработаны реакции Мерцель в квесте в Главе 9^* Доработан квест в столовой в Главе 7^* Исправлена ошибка с отображением названий предметов в лаборатории в Главе 11^* Упрощен ввод названий файлов в терминале в Главе 8^* Доработан квест в модуле Мерцель в Главе 9^^{back|• Вернуться в меню}"
+std("@theme").vars = { ["win.col.alink"] = "white", ["win.w"] = "830", ["win.h"] = "740", ["win.x"] = "45", ["win.y"] = "110", ["win.col.link"] = "#C0C0C0", ["win.col.fg"] = "gray", ["win.fnt.size"] = "20", ["scr.gfx.bg"] = "theme/version.jpg" }
+std("@theme").reset_vars = { ["win.col.alink"] = "#0094ff", ["win.w"] = "830", ["win.h"] = "860", ["win.x"] = "45", ["win.y"] = "20", ["win.col.link"] = "#649bc1", ["win.col.fg"] = "#d3d3d3", ["win.fnt.size"] = "18", ["scr.gfx.bg"] = "theme/bg.jpg" }
+std("player").__moved = nil
+std("player").room = std "version"
+std("player").__need_scene = nil
+std("player").__in_afterwalk = false
+std("version").__from = std "menu"
+std("version").__visits = 1
+std("main").__from = std "main"
+std("menu").__from = std "main"
+std("menu").__visits = 1
+std("version#0").__nr_act = 1

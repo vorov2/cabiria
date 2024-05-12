@@ -220,7 +220,6 @@ config.fnt:text(v,
                         config.fg):draw(s.drawn, 26, (i - 1) * config.fh - 2)
 						end
                 elseif v:startsWith("<loading") then
-v="Подождите:"
                     if not instead.tiny then
                     local num = tonumber(v:sub(9, #v - 1))
                     local max,h = 20,config.fh / 2
@@ -232,6 +231,7 @@ config.fnt:text(v, config.fg)
                     spr:draw(s.drawn, 10 * config.fw + 10,
                         (i - 1) * config.fh + 6)
 end
+v="Подождите:"
                 elseif v:startsWith("<boot") and not instead.tiny then
                     local num = tonumber(v:sub(6, #v - 1))
                     local max,h = 20,config.fh / 2
