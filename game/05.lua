@@ -255,7 +255,6 @@ es.room {
             disp = "Коридор у пристани",
             pic = "station/neardock3"
         }
-        return true
     end
 }
 
@@ -781,7 +780,6 @@ es.room {
     next = function(s)
         es.music("santorum")
         walkin("wake2")
-        return true
     end
 }
 -- endregion
@@ -798,7 +796,6 @@ es.room {
     next = function(s)
         purge("paddle")
         walkin("pause3")
-        return true
     end
 }
 -- endregion
@@ -896,7 +893,6 @@ es.room {
     next_disp = "RELOAD",
     next = function(s)
         snapshots:restore()
-        return true
     end
 }
 -- endregion

@@ -1040,7 +1040,6 @@ es.room {
             pic = "station/lab",
             disp = "Лаборатория"
         }
-        return true
     end
 }
 -- endregion

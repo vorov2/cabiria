@@ -72,7 +72,7 @@ function es.room(tab)
         else
             local oldact = act
             act = function()
-                return oldact(here())
+                oldact(here())
             end
         end
         local next_disp = tab.next_disp

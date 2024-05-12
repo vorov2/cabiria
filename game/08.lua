@@ -47,7 +47,6 @@ es.room {
     next = function(s)
         es.music("dali", 2)
         walkin("tech")
-        return true
     end
 }
 -- endregion

@@ -140,7 +140,7 @@
     [always,back]
     -- Хорошо.
 
-[key:reagent2,npc:vera]
+[key:reagent3,npc:vera]
 -- Заправь сам, -- говорит Вера. -- Там несложно. Я пока занята.
     [always,back]
     -- Да, сейчас.

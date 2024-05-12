@@ -574,7 +574,6 @@ es.room {
             pic = "station/cabinw",
             disp = "Жилой блок D5",
         }
-        return true
     end
 }
 -- endregion
