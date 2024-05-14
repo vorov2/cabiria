@@ -811,10 +811,10 @@ es.obj {
             return "К сожалению, дверцы заперты на замок, причём замок тут самый обычный, механический, с тонким язычком."
         elseif not s.uncapped then
             s.uncapped = true
-            return "Я закрываю дверцы шкафа."
+            return "Я распахиваю дверцы шкафа."
         else
             s.uncapped = false
-            return "Я распахиваю дверцы шкафа."
+            return "Я закрываю дверцы шкафа."
         end
     end,
     used = function(s, w)
