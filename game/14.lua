@@ -1608,6 +1608,7 @@ es.obj {
     disp = es.tool "Фонарь",
     inv = function(s)
         if not s.active then
+            s.active = true
             walkin("interlude2")
             return true
         else
