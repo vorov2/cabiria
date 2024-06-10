@@ -1,34 +1,42 @@
 local std = stead
+std("select_chapter#0").__nr_act = 1
 std("@instead").__sound = nil
 std("@instead").__music_loop = 1024
 std("@instead").__music_fadeout = -1
 std("@instead").__need_fading = false
-std("@instead").__restart = nil
+std("@instead").__sound_channel = -1
 std("@instead").__music_fadein = -1
 std("@instead").__music = "sfx/spring.ogg"
 std("@instead").__autosave_slot = nil
 std("@instead").__autosave = nil
 std("@instead").__menu = nil
 std("@instead").__sound_loop = 1
-std("@instead").__sound_channel = -1
+std("@instead").__restart = nil
 std("@iface").__raw = nil
-std("game").player = pl
-std("game").__started = true
-std("game").__pevents = nil
+std("credits").__from = std "menu"
+std("credits").__visits = 1
 std("game").__reaction = nil
-std("game").__aevents = nil
-std("game").__lastdisp = "<b>Версия 0.15</b>^* Исправлена ошибка, которая могла приводить к зависанию диалога в Главе 7^^<b>Версия 0.14</b>^* Исправлена ошибка, которая могла приводить к зацикливанию в Главе 14^^<b>Версия 0.13</b>^* Исправлены опечатки^* Исправлены ошибочные реакции объекта в реанимационной в Главе 12^^<b>Версия 0.12</b>^* Исправлены опечатки^* Увеличена область срабатывания кнопки для вызова меню в левом углу экрана^* Исправлена ошибка в Главе 11, исправлен некорректный ключ диалога^* Доработана эмуляция терминала, добавлена поддержка для незрячих^^<b>Версия 0.11</b>^* Исправлены опечатки^* Стилистические и смысловые исправления в тексте Обучения и в самой игре^* Исправлена некритичная ошибка в кат-сцене в Главе 5^^<b>Версия 0.10</b>^* Исправлен критический баг в Главе 13^^<b>Версия 0.9</b>^* Исправлены опечатки и стилистические ошибки^* На заставке игры (Глава 3) отображался инвентарь^* Исправлен некритический баг в Обучении^^<b>Версия 0.8</b>^* Исправлены стилистические ошибки и опечатки^* Заменено изображение орбитальной станции^* Исправлена ошибка в первом сне на станции, в Главе 5^* Переработана заставка игры, отображаемая в конце Главы 3^^<b>Версия 0.7</b>^* Исправлены опечатки, сделаны доработки в описаниях объектов и действий^* В \"Информация о версии\" некорректно отображались переводы строк^* В Обучении можно было взаимодействовать с инвентарём на финальном экране^* В Главе 4 команда \"help\" в терминале дважды выводила описание команды \"ver\"^* Заставка Главы 8 показывалась менее секунды^* Улучшено сведение музыки в различных главах^* Квест в Главе 3 с гравитацией теперь заканчивается отдельным экраном^* Изменён спрайт Майорова^* Доработан спрайт Ефимовой^* Добавлена информация об используемом для терминала шрифте в readme.txt^* Терминал больше не добавляет в историю команды, состоящие только из пробелов^* Доработаны реакции Мерцель в квесте в Главе 9^* Доработан квест в столовой в Главе 7^* Исправлена ошибка с отображением названий предметов в лаборатории в Главе 11^* Упрощен ввод названий файлов в терминале в Главе 8^* Доработан квест в модуле Мерцель в Главе 9^^{back|• Вернуться в меню}"
 std("game").__lreaction = nil
-std("game").__time = 2
-std("@theme").vars = { ["win.col.alink"] = "white", ["win.fnt.size"] = "20", ["win.h"] = "740", ["win.x"] = "45", ["win.y"] = "110", ["win.col.link"] = "#C0C0C0", ["scr.gfx.bg"] = "theme/version.jpg", ["win.w"] = "830", ["win.col.fg"] = "gray" }
-std("@theme").reset_vars = { ["win.col.alink"] = "#0094ff", ["win.fnt.size"] = "18", ["win.h"] = "860", ["win.x"] = "45", ["win.y"] = "20", ["win.col.link"] = "#649bc1", ["scr.gfx.bg"] = "theme/bg.jpg", ["win.w"] = "830", ["win.col.fg"] = "#d3d3d3" }
+std("game").player = pl
+std("game").__pevents = nil
+std("game").__time = 9
+std("game").__aevents = nil
+std("game").__started = true
+std("game").__in_ini = false
+std("game").__lastdisp = "^^^^^<x:44%,center>{#new_game|<b>Новая игра</b>} • {#select_chapter|<b>Главы</b>} • {#tutorial|<b>Обучение</b>} • {#credits|<b>Создатели</b>}^^^^^^^^^^^^^^^^^^^^^^^{#version|<b>Версия:  1.0</b>}"
+std("@theme").vars = { ["win.col.alink"] = "white", ["win.w"] = "830", ["win.h"] = "860", ["win.x"] = "45", ["win.y"] = "20", ["win.col.link"] = "gray", ["win.col.fg"] = "gray", ["win.fnt.size"] = "20", ["scr.gfx.bg"] = "theme/menu.jpg" }
+std("@theme").reset_vars = { ["win.col.alink"] = "#0094ff", ["win.w"] = "830", ["win.h"] = "860", ["win.x"] = "45", ["win.y"] = "20", ["win.col.link"] = "#649bc1", ["win.col.fg"] = "#d3d3d3", ["win.fnt.size"] = "18", ["scr.gfx.bg"] = "theme/bg.jpg" }
 std("player").__moved = nil
-std("player").room = std "version"
+std("player").room = std "menu"
 std("player").__need_scene = nil
 std("player").__in_afterwalk = false
+std("back").__nr_act = 4
 std("version").__from = std "menu"
-std("version").__visits = 1
+std("version").__visits = 2
 std("main").__from = std "main"
-std("menu").__from = std "main"
-std("menu").__visits = 1
-std("version#0").__nr_act = 1
+std("chapters").__from = std "menu"
+std("chapters").__visits = 1
+std("menu").__from = std "chapters"
+std("menu").__visits = 5
+std("version#0").__nr_act = 2
+std("credits#0").__nr_act = 1
