@@ -1610,7 +1610,6 @@ es.obj {
         if not s.active then
             s.active = true
             walkin("interlude2")
-            return true
         else
             return "Самодельный фонарик, надеюсь его света хватит."
         end
@@ -1632,6 +1631,7 @@ es.room {
         es.music("nochance", 2, 0, 3000)
     end,
     next = function(s)
+        all.flash.active = true
         es.walkdlg("vera.walking")
     end
 }
