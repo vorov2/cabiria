@@ -342,7 +342,7 @@ local system_error = function(s, args, load)
     end
     local code = "ABCDEFGH"
     local err = code:charAt(rnd(#code)) .. tostring(rnd(10, 86))
-    return string.format("Внимание! Невозможно запустить модуль из-за ошибки кодом %s.", err)
+    return string.format("Внимание! Невозможно запустить модуль из-за ошибки с кодом %s.", err)
 end
 es.terminal {
     nam = "lab.terminal",
